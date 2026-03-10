@@ -43,7 +43,7 @@ const Hero = () => {
 
     return (
         <section ref={heroRef} className="min-h-[100svh] w-full flex flex-col relative hero-surface overflow-hidden" id="home">
-            <div className="w-full mx-auto flex flex-col sm:mt-36 mt-24 c-space gap-3 relative z-20">
+            <div className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3 relative z-20">
                 <p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
                     Hi, I am Prahlad <span className="waving-hand">👋</span>
                 </p>

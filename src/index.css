@@ -689,8 +689,8 @@ body::before {
   }
 
   .hero-canvas-shell {
-    top: 1.4rem;
-    bottom: 1.4rem;
+    top: 3.4rem;
+    bottom: 1rem;
   }
 }
 
