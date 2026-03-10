@@ -1,16 +1,36 @@
-import {Suspense, useState} from 'react'
+import {Suspense, useEffect, useRef, useState} from 'react'
 import {myProjects} from "../constants/index.js";
 import {Canvas} from "@react-three/fiber";
 import {Center, OrbitControls} from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import DemoComputer from "../components/DemoComputer.jsx";
+import {useMediaQuery} from "react-responsive";
 
 const projectCount = myProjects.length;
 
 const Projects = () => {
+    const sectionRef = useRef(null);
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+    const [isSectionVisible, setIsSectionVisible] = useState(false);
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const currentProject = myProjects[selectedProjectIndex];
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsSectionVisible(entry.isIntersecting);
+            },
+            { threshold: 0.2 },
+        );
+
+        observer.observe(section);
+
+        return () => observer.disconnect();
+    }, []);
 
     const handleNavigation = (direction) => {
         setSelectedProjectIndex((prevIndex) => {
@@ -24,18 +44,18 @@ const Projects = () => {
     }
 
     return (
-        <section className="c-space my-24 section-wrap" id="projects">
+        <section ref={sectionRef} className="c-space my-24 section-wrap" id="projects">
             <p className="head-text">
                 My Projects
             </p>
             <div className="grid lg:grid-cols-2 grid-cols-1 mt-12 gap-5 w-full">
                 <div className="project-panel flex flex-col gap-5 relative sm:p-10 py-10 px-5 shadow-2xl shadow-black-200">
                     <div className="absolute top-0 right-0">
-                        <img src={currentProject.spotlight} alt="spotlight" className="w-full h-96 object-cover rounded-xl"/>
+                        <img src={currentProject.spotlight} alt="spotlight" className="w-full h-96 object-cover rounded-xl" loading="lazy" decoding="async"/>
                     </div>
 
                     <div className="p-3 backdrop-filter backdrop-blur-3xl w-fit rounded-lg" style={currentProject.logoStyle}>
-                        <img src={currentProject.logo} alt="logo" className="w-10 h-10 shadow-sm"/>
+                        <img src={currentProject.logo} alt="logo" className="w-10 h-10 shadow-sm" loading="lazy" decoding="async"/>
                     </div>
 
                     <div className="flex flex-col gap-5 text-white-600 my-5">
@@ -54,7 +74,7 @@ const Projects = () => {
                         <div className="flex items-center gap-3">
                             {currentProject.tags.map((tag, index) => (
                                 <div key={index} className="tech-logo">
-                                    <img src={tag.path} alt={tag.name}/>
+                                    <img src={tag.path} alt={tag.name} loading="lazy" decoding="async"/>
                                 </div>
                             ))}
                         </div>
@@ -78,7 +98,12 @@ const Projects = () => {
                 </div>
 
                 <div className="project-panel h-96 md:h-full">
-                    <Canvas dpr={[1, 1.3]} gl={{ antialias: false, powerPreference: 'high-performance' }} performance={{ min: 0.6 }}>
+                    <Canvas
+                        dpr={isMobile ? [0.85, 1.05] : [1, 1.3]}
+                        frameloop={isSectionVisible ? 'always' : 'demand'}
+                        gl={{ antialias: false, powerPreference: 'high-performance' }}
+                        performance={{ min: 0.55 }}
+                    >
                         <ambientLight intensity={Math.PI}/>
                         <directionalLight position={[10, 10, 5]}/>
                         <Center>
@@ -88,7 +113,7 @@ const Projects = () => {
                                 </group>
                             </Suspense>
                         </Center>
-                        <OrbitControls maxPolarAngle={Math.PI/2} enableZoom={false}/>
+                        <OrbitControls maxPolarAngle={Math.PI/2} enableZoom={false} enablePan={false} enableRotate={!isMobile}/>
                     </Canvas>
                 </div>
             </div>

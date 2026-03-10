@@ -1,27 +1,52 @@
-import {Suspense, useState} from 'react'
+import {Suspense, useEffect, useRef, useState} from 'react'
 import {Canvas} from "@react-three/fiber";
 import {workExperiences} from "../constants/index.js";
 import {OrbitControls} from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
 import Developer from "../components/Developer.jsx";
+import {useMediaQuery} from "react-responsive";
 
 const Experience = () => {
+    const sectionRef = useRef(null);
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const [animationName, setAnimationName] = useState('idle');
+    const [isSectionVisible, setIsSectionVisible] = useState(false);
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsSectionVisible(entry.isIntersecting);
+            },
+            { threshold: 0.2 },
+        );
+
+        observer.observe(section);
+
+        return () => observer.disconnect();
+    }, []);
 
     return (
-        <section className="c-space my-24 section-wrap" id="experience">
+        <section ref={sectionRef} className="c-space my-24 section-wrap" id="experience">
             <div className="w-full text-white-600">
                 <h3 className="head-text">
                     My Work Experience
                 </h3>
                 <div className="work-container">
                     <div className="work-canvas">
-                        <Canvas dpr={[1, 1.3]} gl={{ antialias: false, powerPreference: 'high-performance' }} performance={{ min: 0.6 }}>
+                        <Canvas
+                            dpr={isMobile ? [0.85, 1.05] : [1, 1.3]}
+                            frameloop={isSectionVisible ? 'always' : 'demand'}
+                            gl={{ antialias: false, powerPreference: 'high-performance' }}
+                            performance={{ min: 0.55 }}
+                        >
                             <ambientLight intensity={7} />
                             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
                             <directionalLight position={[0, 0, 10]} intensity={1}/>
-                            <OrbitControls enableZoom={false} maxPolarAngle={Math.PI/2}/>
+                            <OrbitControls enableZoom={false} enablePan={false} enableRotate={!isMobile} maxPolarAngle={Math.PI/2}/>
                             <Suspense fallback={<CanvasLoader/>}>
                                 <Developer position-y={-3} scale={3} animationName={animationName}/>
                             </Suspense>
@@ -39,7 +64,7 @@ const Experience = () => {
                                 >
                                     <div className="work-timeline">
                                         <div className="work-content_logo">
-                                            <img src={icon} alt="logo" className="w-full h-full"/>
+                                            <img src={icon} alt="logo" className="w-full h-full" loading="lazy" decoding="async"/>
                                         </div>
                                         {index !== workExperiences.length - 1 && <div className="work-content_bar"/>}
                                     </div>

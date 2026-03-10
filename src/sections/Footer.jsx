@@ -37,7 +37,7 @@ const Footer = () => {
                     {socialProfiles.map((item) => (
                         <div className="social-icon" key={item.label}>
                             <a href={item.href} {...getExternalProps(item.href)} className="social-link" aria-label={item.label}>
-                                <img src={item.icon} alt={item.label} className="social-image" />
+                                <img src={item.icon} alt={item.label} className="social-image" loading="lazy" decoding="async" />
                             </a>
                         </div>
                     ))}

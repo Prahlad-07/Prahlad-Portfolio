@@ -16,7 +16,7 @@ const Testimonials = () => {
 
                         <div className="client-content">
                             <div className="flex gap-3 items-center">
-                                <img src={item.img} alt={item.name} className="client-avatar" />
+                                <img src={item.img} alt={item.name} className="client-avatar" loading="lazy" decoding="async" />
                                 <div className="flex flex-col gap-1">
                                     <p className="font-semibold text-white-800 leading-tight">{item.name}</p>
                                     <p className="client-role">{item.position}</p>
@@ -25,7 +25,7 @@ const Testimonials = () => {
 
                             <div className="flex self-end items-center gap-2" aria-label="5 star rating">
                                 {Array.from({ length: 5 }).map((_, index) => (
-                                    <img key={index} src="/assets/star.png" alt="star" className="w-4 h-4" />
+                                    <img key={index} src="/assets/star.png" alt="star" className="w-4 h-4" loading="lazy" decoding="async" />
                                 ))}
                             </div>
                         </div>

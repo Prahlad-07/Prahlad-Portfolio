@@ -23,6 +23,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
   scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -605,20 +606,17 @@ body::before {
 
 .section-wrap.section-animate {
   opacity: 0;
-  transform: translateY(22px) scale(0.992);
-  filter: blur(3px);
+  transform: translate3d(0, 22px, 0);
   transition:
-          opacity 700ms var(--motion-spring),
-          transform 800ms var(--motion-spring),
-          filter 700ms ease;
+          opacity 620ms var(--motion-spring),
+          transform 700ms var(--motion-spring);
   transition-delay: var(--section-stagger, 0ms);
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 
 .section-wrap.section-animate.section-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .section-wrap::after {
@@ -639,6 +637,10 @@ body::before {
   background:
           radial-gradient(30rem 14rem at 50% 10%, rgba(137, 181, 255, 0.2), transparent 70%),
           linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 35%);
+}
+
+.hero-canvas-shell {
+  top: 0;
 }
 
 .nav-shell {
@@ -684,6 +686,46 @@ body::before {
 
   .profiles-grid_compact {
     grid-template-columns: 1fr;
+  }
+
+  .hero-canvas-shell {
+    top: 1.4rem;
+    bottom: 1.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  .section-wrap.section-animate {
+    transform: translate3d(0, 12px, 0);
+    transition-duration: 480ms;
+  }
+
+  .grid-container,
+  .project-panel,
+  .profile-card,
+  .coding-spotlight,
+  .work-canvas,
+  .work-content,
+  .contact-info-card,
+  .contact-container,
+  .client-review {
+    backdrop-filter: none;
+  }
+}
+
+@media (hover: none) {
+  .grid-container:hover,
+  .profile-card:hover,
+  .client-review:hover,
+  .social-icon:hover,
+  .btn:hover,
+  .field-btn:hover {
+    transform: none;
+    box-shadow: none;
   }
 }
 

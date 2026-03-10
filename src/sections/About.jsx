@@ -2,12 +2,14 @@ import {useEffect, useRef, useState} from 'react'
 import Globe from "react-globe.gl";
 import ButtonResume from "../components/ButtonResume.jsx";
 import { personalInfo } from "../constants/index.js";
+import {useMediaQuery} from "react-responsive";
 
 const About = () => {
 
     const globeRef = useRef();
     const aboutRef = useRef();
     const [hasCopied, setHasCopied] = useState(false);
+    const isMobile = useMediaQuery({ maxWidth: 768 });
 
     useEffect(() => {
         const globe = globeRef.current;
@@ -21,14 +23,14 @@ const About = () => {
             if (!globeRef.current) return;
             const currentPoint = globe.pointOfView();
             globe.pointOfView(
-                { lat: currentPoint.lat, lng: currentPoint.lng + 0.35 },
+                { lat: currentPoint.lat, lng: currentPoint.lng + 0.22 },
                 140
             );
         };
 
         const startRotation = () => {
             if (intervalId) return;
-            intervalId = window.setInterval(rotateStep, 140);
+            intervalId = window.setInterval(rotateStep, 180);
         };
 
         const stopRotation = () => {
@@ -68,7 +70,7 @@ const About = () => {
             <div className="about-top-grid">
                 <div className="about-top-card">
                     <div className="grid-container">
-                        <img src="/assets/grid1.png" alt="grid-1" className="about-top-image"/>
+                        <img src="/assets/grid1.png" alt="grid-1" className="about-top-image" loading="lazy" decoding="async"/>
 
                         <div className="about-card-body">
                             <p className="grid-headtext">
@@ -86,7 +88,7 @@ const About = () => {
 
                 <div className="about-top-card">
                     <div className="grid-container">
-                        <img src="/assets/Grid2New.png" alt="grid-2" className="about-top-image"/>
+                        <img src="/assets/Grid2New.png" alt="grid-2" className="about-top-image" loading="lazy" decoding="async"/>
                         <div className="about-card-body">
                             <p className="grid-headtext">
                                 Achievements
@@ -107,13 +109,13 @@ const About = () => {
                         <div className="about-globe-wrap">
                             <Globe
                                 ref={globeRef}
-                                height={250}
-                                width={250}
+                                height={isMobile ? 220 : 250}
+                                width={isMobile ? 220 : 250}
                                 backgroundColor="rgba(0, 0, 0, 0)"
                                 backgroundImageOpacity={0.5}
                                 showAtmosphere={true}
                                 showGraticules
-                                labelsData={[{ lat: 22.0796, lng: 82.1409, text: 'Bilaspur, India', color: 'white', size: 15 }]}
+                                labelsData={[{ lat: 28.6139, lng: 77.2090, text: 'Delhi, India', color: 'white', size: 15 }]}
                             />
                         </div>
                         <div className="about-card-body">
@@ -133,7 +135,7 @@ const About = () => {
             <div className="about-bottom-grid">
                 <div className="xl:col-span-2">
                     <div className="grid-container">
-                        <img src="/assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain"/>
+                        <img src="/assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain" loading="lazy" decoding="async"/>
 
                         <div>
                             <p className="grid-headtext">
@@ -171,7 +173,7 @@ const About = () => {
 
                 <div className="xl:col-span-1">
                     <div className="grid-container">
-                        <img src="/assets/grid4.png" alt="grid-4" className="w-full sm:h-[276px] h-fit object-contain"/>
+                        <img src="/assets/grid4.png" alt="grid-4" className="w-full sm:h-[276px] h-fit object-contain" loading="lazy" decoding="async"/>
 
                         <div className="space-y-2">
                             <p className="grid-subtext text-center">
