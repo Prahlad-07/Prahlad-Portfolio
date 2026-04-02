@@ -29,8 +29,12 @@ const Hero = () => {
     useEffect(() => {
         const section = heroRef.current;
         if (!section) return;
+        if (typeof window.IntersectionObserver === 'undefined') {
+            setIsHeroVisible(true);
+            return;
+        }
 
-        const observer = new IntersectionObserver(
+        const observer = new window.IntersectionObserver(
             ([entry]) => {
                 setIsHeroVisible(entry.isIntersecting);
             },

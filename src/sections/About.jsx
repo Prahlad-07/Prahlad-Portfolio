@@ -16,8 +16,12 @@ const About = () => {
     useEffect(() => {
         const section = aboutRef.current;
         if (!section) return;
+        if (typeof window.IntersectionObserver === 'undefined') {
+            setShouldRenderGlobe(true);
+            return;
+        }
 
-        const observer = new IntersectionObserver(
+        const observer = new window.IntersectionObserver(
             ([entry]) => {
                 if (!entry.isIntersecting) return;
                 setShouldRenderGlobe(true);
@@ -34,7 +38,8 @@ const About = () => {
     useEffect(() => {
         const section = aboutRef.current;
         if (!section || !shouldRenderGlobe) return;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const supportsMatchMedia = typeof window.matchMedia === 'function';
+        if (supportsMatchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         let intervalId = null;
 
@@ -59,7 +64,14 @@ const About = () => {
             intervalId = null;
         };
 
-        const observer = new IntersectionObserver(
+        if (typeof window.IntersectionObserver === 'undefined') {
+            startRotation();
+            return () => {
+                stopRotation();
+            };
+        }
+
+        const observer = new window.IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) startRotation();

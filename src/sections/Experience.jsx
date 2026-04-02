@@ -18,8 +18,13 @@ const Experience = () => {
     useEffect(() => {
         const section = sectionRef.current;
         if (!section) return;
+        if (typeof window.IntersectionObserver === 'undefined') {
+            setIsSectionVisible(true);
+            setShouldRenderCanvas(true);
+            return;
+        }
 
-        const observer = new IntersectionObserver(
+        const observer = new window.IntersectionObserver(
             ([entry]) => {
                 setIsSectionVisible(entry.isIntersecting);
                 if (entry.isIntersecting) {
