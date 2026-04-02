@@ -165,6 +165,10 @@ body::before {
     @apply text-center xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-generalsans font-black !leading-normal;
   }
 
+  .hero-intro {
+    @apply leading-relaxed;
+  }
+
   .hero-kicker {
     @apply inline-flex mx-auto px-4 py-1 rounded-full border border-white/20 text-sm text-white-700;
     background: rgba(120, 169, 255, 0.08);
@@ -208,6 +212,16 @@ body::before {
 
   .about-globe-wrap {
     @apply rounded-3xl w-full sm:h-[248px] h-[220px] flex justify-center items-center;
+  }
+
+  .about-globe-placeholder {
+    @apply rounded-full;
+    width: clamp(220px, 52vw, 250px);
+    height: clamp(220px, 52vw, 250px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background:
+            radial-gradient(circle at 35% 35%, rgba(159, 203, 255, 0.35), rgba(159, 203, 255, 0.05) 55%, transparent 70%),
+            rgba(255, 255, 255, 0.03);
   }
 
   .about-card-body {
@@ -420,6 +434,20 @@ body::before {
     @apply col-span-1 rounded-2xl border;
     border-color: var(--surface-border);
     background: linear-gradient(165deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  }
+
+  .canvas-placeholder {
+    @apply w-full h-full rounded-2xl flex items-center justify-center px-6 text-center;
+    min-height: 24rem;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+  }
+
+  .canvas-placeholder_tall {
+    min-height: 26rem;
+  }
+
+  .canvas-placeholder_text {
+    @apply text-white-500 text-sm sm:text-base;
   }
 
   .work-content {
@@ -666,6 +694,10 @@ body::before {
   animation-iteration-count: infinite;
   transform-origin: 70% 70%;
   display: inline-block;
+  margin-left: 0.18em;
+  line-height: 1;
+  vertical-align: -0.08em;
+  padding-inline-end: 0.06em;
 }
 
 .arrow-gradient {
@@ -682,6 +714,23 @@ body::before {
   .contact-info-card,
   .contact-container {
     padding: 1.2rem;
+  }
+
+  .hero-intro {
+    line-height: 1.45;
+  }
+
+  .waving-hand {
+    padding-inline-end: 0.12em;
+    padding-bottom: 0.08em;
+  }
+
+  .canvas-placeholder {
+    min-height: 20rem;
+  }
+
+  .canvas-placeholder_tall {
+    min-height: 22rem;
   }
 
   .profiles-grid_compact {

@@ -19,6 +19,7 @@ const Hero = () => {
     const isSmall = useMediaQuery({ maxWidth: 440});
     const isMobile = useMediaQuery({ maxWidth: 768});
     const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024});
+    const showHeroDecor = !isMobile && !isTablet;
 
     const sizes = useMemo(
         () => calculateSizes(isSmall, isMobile, isTablet),
@@ -44,7 +45,7 @@ const Hero = () => {
     return (
         <section ref={heroRef} className="min-h-[100svh] w-full flex flex-col relative hero-surface overflow-hidden" id="home">
             <div className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3 relative z-20">
-                <p className="sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
+                <p className="hero-intro sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
                     Hi, I am Prahlad <span className="waving-hand">👋</span>
                 </p>
                 <p className="hero_tag text-gray_gradient">
@@ -54,8 +55,8 @@ const Hero = () => {
             <div className="w-full h-full absolute inset-0 hero-canvas-shell">
                 <Canvas
                     className="w-full h-full"
-                    dpr={isMobile ? [0.8, 1.05] : [1, 1.35]}
-                    frameloop={isHeroVisible ? 'always' : 'demand'}
+                    dpr={isMobile ? [0.72, 1] : [0.9, 1.2]}
+                    frameloop={isHeroVisible ? 'always' : 'never'}
                     gl={{ antialias: false, powerPreference: 'high-performance' }}
                     performance={{ min: 0.5 }}
                     camera={{ fov: isMobile ? 48 : 45, near: 0.1, far: 1000 }}
@@ -69,7 +70,7 @@ const Hero = () => {
                                 scale={sizes.deskScale}
                             />
                         </HeroCamera>
-                        {!isMobile && (
+                        {showHeroDecor && (
                             <group>
                                 <Target position={sizes.targetPosition}/>
                                 <ReactLogo position={sizes.reactLogoPosition}/>

@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import emailjs from '@emailjs/browser'
 import { personalInfo } from "../constants/index.js";
 
 const emailServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_n3ls4ma';
@@ -52,6 +51,8 @@ const Contact = () => {
         setLoading(true);
 
         try{
+            const { default: emailjs } = await import('@emailjs/browser');
+
             const templateParams = {
                 from_name: trimmedForm.name,
                 name: trimmedForm.name,

@@ -1,26 +1,46 @@
-import {useEffect, useRef, useState} from 'react'
-import Globe from "react-globe.gl";
+import {lazy, Suspense, useEffect, useRef, useState} from 'react'
 import ButtonResume from "../components/ButtonResume.jsx";
 import { personalInfo } from "../constants/index.js";
 import {useMediaQuery} from "react-responsive";
+
+const Globe = lazy(() => import('react-globe.gl'));
 
 const About = () => {
 
     const globeRef = useRef();
     const aboutRef = useRef();
     const [hasCopied, setHasCopied] = useState(false);
+    const [shouldRenderGlobe, setShouldRenderGlobe] = useState(false);
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
     useEffect(() => {
-        const globe = globeRef.current;
         const section = aboutRef.current;
-        if (!globe || !section) return;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting) return;
+                setShouldRenderGlobe(true);
+                observer.disconnect();
+            },
+            { threshold: 0.1, rootMargin: '220px 0px' }
+        );
+
+        observer.observe(section);
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const section = aboutRef.current;
+        if (!section || !shouldRenderGlobe) return;
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         let intervalId = null;
 
         const rotateStep = () => {
             if (!globeRef.current) return;
+            const globe = globeRef.current;
             const currentPoint = globe.pointOfView();
             globe.pointOfView(
                 { lat: currentPoint.lat, lng: currentPoint.lng + 0.22 },
@@ -55,7 +75,7 @@ const About = () => {
             observer.disconnect();
             stopRotation();
         };
-    }, []);
+    }, [shouldRenderGlobe]);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(personalInfo.email);
@@ -107,16 +127,22 @@ const About = () => {
                 <div className="about-top-card md:col-span-2 xl:col-span-1">
                     <div className="grid-container">
                         <div className="about-globe-wrap">
-                            <Globe
-                                ref={globeRef}
-                                height={isMobile ? 220 : 250}
-                                width={isMobile ? 220 : 250}
-                                backgroundColor="rgba(0, 0, 0, 0)"
-                                backgroundImageOpacity={0.5}
-                                showAtmosphere={true}
-                                showGraticules
-                                labelsData={[{ lat: 28.6139, lng: 77.2090, text: 'Delhi, India', color: 'white', size: 15 }]}
-                            />
+                            {shouldRenderGlobe ? (
+                                <Suspense fallback={<div className="about-globe-placeholder" aria-hidden="true"/>}>
+                                    <Globe
+                                        ref={globeRef}
+                                        height={isMobile ? 220 : 250}
+                                        width={isMobile ? 220 : 250}
+                                        backgroundColor="rgba(0, 0, 0, 0)"
+                                        backgroundImageOpacity={0.5}
+                                        showAtmosphere={true}
+                                        showGraticules
+                                        labelsData={[{ lat: 28.6139, lng: 77.2090, text: 'Delhi, India', color: 'white', size: 15 }]}
+                                    />
+                                </Suspense>
+                            ) : (
+                                <div className="about-globe-placeholder" aria-hidden="true"/>
+                            )}
                         </div>
                         <div className="about-card-body">
                             <p className="grid-headtext">

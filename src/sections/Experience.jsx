@@ -1,10 +1,11 @@
-import {Suspense, useEffect, useRef, useState} from 'react'
+import {lazy, Suspense, useEffect, useRef, useState} from 'react'
 import {Canvas} from "@react-three/fiber";
 import {workExperiences} from "../constants/index.js";
 import {OrbitControls} from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
-import Developer from "../components/Developer.jsx";
 import {useMediaQuery} from "react-responsive";
+
+const Developer = lazy(() => import('../components/Developer.jsx'));
 
 const Experience = () => {
     const sectionRef = useRef(null);
@@ -12,6 +13,7 @@ const Experience = () => {
 
     const [animationName, setAnimationName] = useState('idle');
     const [isSectionVisible, setIsSectionVisible] = useState(false);
+    const [shouldRenderCanvas, setShouldRenderCanvas] = useState(false);
 
     useEffect(() => {
         const section = sectionRef.current;
@@ -20,8 +22,11 @@ const Experience = () => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsSectionVisible(entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    setShouldRenderCanvas(true);
+                }
             },
-            { threshold: 0.2 },
+            { threshold: 0.16, rootMargin: '220px 0px' },
         );
 
         observer.observe(section);
@@ -37,20 +42,26 @@ const Experience = () => {
                 </h3>
                 <div className="work-container">
                     <div className="work-canvas">
-                        <Canvas
-                            dpr={isMobile ? [0.85, 1.05] : [1, 1.3]}
-                            frameloop={isSectionVisible ? 'always' : 'demand'}
-                            gl={{ antialias: false, powerPreference: 'high-performance' }}
-                            performance={{ min: 0.55 }}
-                        >
-                            <ambientLight intensity={7} />
-                            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                            <directionalLight position={[0, 0, 10]} intensity={1}/>
-                            <OrbitControls enableZoom={false} enablePan={false} enableRotate={!isMobile} maxPolarAngle={Math.PI/2}/>
-                            <Suspense fallback={<CanvasLoader/>}>
-                                <Developer position-y={-3} scale={3} animationName={animationName}/>
-                            </Suspense>
-                        </Canvas>
+                        {shouldRenderCanvas ? (
+                            <Canvas
+                                dpr={isMobile ? [0.72, 1] : [0.9, 1.2]}
+                                frameloop={isSectionVisible ? 'always' : 'never'}
+                                gl={{ antialias: false, powerPreference: 'high-performance' }}
+                                performance={{ min: 0.5 }}
+                            >
+                                <ambientLight intensity={7} />
+                                <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+                                <directionalLight position={[0, 0, 10]} intensity={1}/>
+                                <OrbitControls enableZoom={false} enablePan={false} enableRotate={!isMobile} maxPolarAngle={Math.PI/2}/>
+                                <Suspense fallback={<CanvasLoader/>}>
+                                    <Developer position-y={-3} scale={3} animationName={animationName}/>
+                                </Suspense>
+                            </Canvas>
+                        ) : (
+                            <div className="canvas-placeholder canvas-placeholder_tall">
+                                <p className="canvas-placeholder_text">Loading 3D model on scroll...</p>
+                            </div>
+                        )}
                     </div>
                     <div className="work-content">
                         <div className="sm:py-10 py-5 sm:px-5 px-2.5">

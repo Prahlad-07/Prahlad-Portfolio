@@ -1,17 +1,18 @@
-import {Suspense, useEffect, useRef, useState} from 'react'
+import {lazy, Suspense, useEffect, useRef, useState} from 'react'
 import {myProjects} from "../constants/index.js";
 import {Canvas} from "@react-three/fiber";
 import {Center, OrbitControls} from "@react-three/drei";
 import CanvasLoader from "../components/CanvasLoader.jsx";
-import DemoComputer from "../components/DemoComputer.jsx";
 import {useMediaQuery} from "react-responsive";
 
 const projectCount = myProjects.length;
+const DemoComputer = lazy(() => import('../components/DemoComputer.jsx'));
 
 const Projects = () => {
     const sectionRef = useRef(null);
     const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
     const [isSectionVisible, setIsSectionVisible] = useState(false);
+    const [shouldRenderCanvas, setShouldRenderCanvas] = useState(false);
     const isMobile = useMediaQuery({ maxWidth: 768 });
 
     const currentProject = myProjects[selectedProjectIndex];
@@ -23,8 +24,11 @@ const Projects = () => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsSectionVisible(entry.isIntersecting);
+                if (entry.isIntersecting) {
+                    setShouldRenderCanvas(true);
+                }
             },
-            { threshold: 0.2 },
+            { threshold: 0.16, rootMargin: '220px 0px' },
         );
 
         observer.observe(section);
@@ -98,23 +102,29 @@ const Projects = () => {
                 </div>
 
                 <div className="project-panel h-96 md:h-full">
-                    <Canvas
-                        dpr={isMobile ? [0.85, 1.05] : [1, 1.3]}
-                        frameloop={isSectionVisible ? 'always' : 'demand'}
-                        gl={{ antialias: false, powerPreference: 'high-performance' }}
-                        performance={{ min: 0.55 }}
-                    >
-                        <ambientLight intensity={Math.PI}/>
-                        <directionalLight position={[10, 10, 5]}/>
-                        <Center>
-                            <Suspense fallback={<CanvasLoader/>}>
-                                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                                    <DemoComputer texture={currentProject.texture}/>
-                                </group>
-                            </Suspense>
-                        </Center>
-                        <OrbitControls maxPolarAngle={Math.PI/2} enableZoom={false} enablePan={false} enableRotate={!isMobile}/>
-                    </Canvas>
+                    {shouldRenderCanvas ? (
+                        <Canvas
+                            dpr={isMobile ? [0.72, 1] : [0.9, 1.2]}
+                            frameloop={isSectionVisible ? 'always' : 'never'}
+                            gl={{ antialias: false, powerPreference: 'high-performance' }}
+                            performance={{ min: 0.5 }}
+                        >
+                            <ambientLight intensity={Math.PI}/>
+                            <directionalLight position={[10, 10, 5]}/>
+                            <Center>
+                                <Suspense fallback={<CanvasLoader/>}>
+                                    <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                                        <DemoComputer texture={currentProject.texture}/>
+                                    </group>
+                                </Suspense>
+                            </Center>
+                            <OrbitControls maxPolarAngle={Math.PI/2} enableZoom={false} enablePan={false} enableRotate={!isMobile}/>
+                        </Canvas>
+                    ) : (
+                        <div className="canvas-placeholder">
+                            <p className="canvas-placeholder_text">Loading 3D preview on scroll...</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>
