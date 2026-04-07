@@ -58,5 +58,4 @@ const Rings = ({ position }) => {
         </Center>
     );
 };
-
 export default Rings;
