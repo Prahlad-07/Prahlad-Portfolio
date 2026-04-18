@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useGraph } from '@react-three/fiber';
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
+import PropTypes from 'prop-types';
 
 const Developer = ({ animationName = 'idle', ...props }) => {
     const group = useRef();
@@ -124,6 +125,10 @@ const Developer = ({ animationName = 'idle', ...props }) => {
             />
         </group>
     );
+};
+
+Developer.propTypes = {
+    animationName: PropTypes.string,
 };
 
 export default Developer;

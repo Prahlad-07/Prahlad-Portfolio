@@ -1,99 +1,94 @@
-import {Suspense, useEffect, useMemo, useRef, useState} from 'react'
-import {Canvas} from "@react-three/fiber";
-import CanvasLoader from "../components/CanvasLoader.jsx";
-import HackerRoom from "../components/HackerRoom.jsx";
-import {PerspectiveCamera} from "@react-three/drei";
-import {useMediaQuery} from "react-responsive";
-import {calculateSizes} from "../constants/index.js";
-import Target from "../components/Target.jsx";
-import ReactLogo from "../components/ReactLogo.jsx";
-import Cube from "../components/Cube.jsx";
-import Rings from "../components/Rings.jsx";
-import HeroCamera from "../components/HeroCamera.jsx";
-import Button from "../components/Button.jsx";
+import { heroMetrics, personalInfo } from '../constants/index.js';
+
+const socialActions = [
+    { id: 1, label: 'LinkedIn', href: personalInfo.socialLinks.linkedin },
+    { id: 2, label: 'GitHub', href: personalInfo.socialLinks.github },
+    { id: 3, label: 'Email', href: `mailto:${personalInfo.email}` },
+];
 
 const Hero = () => {
-    const heroRef = useRef(null);
-    const [isHeroVisible, setIsHeroVisible] = useState(true);
-
-    const isSmall = useMediaQuery({ maxWidth: 440});
-    const isMobile = useMediaQuery({ maxWidth: 768});
-    const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1024});
-    const showHeroDecor = !isMobile && !isTablet;
-
-    const sizes = useMemo(
-        () => calculateSizes(isSmall, isMobile, isTablet),
-        [isSmall, isMobile, isTablet],
-    );
-
-    useEffect(() => {
-        const section = heroRef.current;
-        if (!section) return;
-        if (typeof window.IntersectionObserver === 'undefined') {
-            setIsHeroVisible(true);
-            return;
-        }
-
-        const observer = new window.IntersectionObserver(
-            ([entry]) => {
-                setIsHeroVisible(entry.isIntersecting);
-            },
-            { threshold: 0.15 },
-        );
-
-        observer.observe(section);
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
-        <section ref={heroRef} className="min-h-[100svh] w-full flex flex-col relative hero-surface overflow-hidden" id="home">
-            <div className="w-full mx-auto flex flex-col sm:mt-36 mt-20 c-space gap-3 relative z-20">
-                <p className="hero-intro sm:text-3xl text-xl font-medium text-white text-center font-generalsans">
-                    Hi, I am Prahlad <span className="waving-hand">👋</span>
-                </p>
-                <p className="hero_tag text-gray_gradient">
-                    Software Engineer
-                </p>
-            </div>
-            <div className="w-full h-full absolute inset-0 hero-canvas-shell">
-                <Canvas
-                    className="w-full h-full"
-                    dpr={isMobile ? [0.72, 1] : [0.9, 1.2]}
-                    frameloop={isHeroVisible ? 'always' : 'never'}
-                    gl={{ antialias: false, powerPreference: 'high-performance' }}
-                    performance={{ min: 0.5 }}
-                    camera={{ fov: isMobile ? 48 : 45, near: 0.1, far: 1000 }}
-                >
-                    <Suspense fallback={<CanvasLoader/>}>
-                        <PerspectiveCamera makeDefault position={[0, 0, 23]}/>
-                        <HeroCamera isMobile={isMobile}>
-                            <HackerRoom
-                                position={sizes.deskPosition}
-                                rotation={[0, -Math.PI, 0]}
-                                scale={sizes.deskScale}
-                            />
-                        </HeroCamera>
-                        {showHeroDecor && (
-                            <group>
-                                <Target position={sizes.targetPosition}/>
-                                <ReactLogo position={sizes.reactLogoPosition}/>
-                                <Cube position={sizes.cubePosition}/>
-                                <Rings position={sizes.ringPosition}/>
-                            </group>
-                        )}
-                            <ambientLight intensity={isMobile ? 0.95 : 1}/>
-                            <directionalLight position={[10, 10, 10]} intensity={isMobile ? 0.45 : 0.55}/>
-                    </Suspense>
-                </Canvas>
-            </div>
+        <section className="section-wrap hero-section" id="home">
+            <div className="shell hero-layout">
+                <div className="hero-copy">
+                    <p className="section-eyebrow">{personalInfo.availability}</p>
+                    <p className="hero-name">
+                        {personalInfo.fullName}
+                        <span>{personalInfo.role}</span>
+                    </p>
+                    <h1 className="hero-display">
+                        Building <em>reliable</em> software with backend depth and product-level polish.
+                    </h1>
+                    <p className="hero-body">
+                        {personalInfo.intro} {personalInfo.summary}
+                    </p>
 
-            <div className="absolute bottom-2 sm:bottom-4 left-0 right-0 w-full z-20 c-space mb-5">
-                <a href="#about" className="w-fit">
-                    <Button name="Let's work together" isBeam containerClas="sm:w-fit w-full sm:min-w-96"/>
-                </a>
+                    <div className="hero-detail_row">
+                        <span className="detail-chip">{personalInfo.location}</span>
+                        <span className="detail-chip">Spring Boot, React, and system design</span>
+                    </div>
+
+                    <div className="hero-actions">
+                        <a
+                            href={personalInfo.resumeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="button-primary"
+                        >
+                            View Resume
+                        </a>
+                        <a href="#contact" className="button-secondary">
+                            Let&apos;s Talk
+                        </a>
+                    </div>
+
+                    <div className="hero-social_row" aria-label="Social links">
+                        {socialActions.map((action) => (
+                            <a
+                                key={action.id}
+                                href={action.href}
+                                target={action.href.startsWith('http') ? '_blank' : undefined}
+                                rel={action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                className="text-link_chip"
+                            >
+                                {action.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="hero-visual">
+                    <article className="premium-card hero-portrait_card">
+                        <span className="hero-status_badge">Open to SDE roles</span>
+                        <div className="hero-portrait_glow" aria-hidden="true" />
+                        <div className="hero-portrait_frame">
+                            <img
+                                src="/assets/Prahlad_Yadav_Photo.jpeg"
+                                alt="Prahlad Yadav portrait"
+                                className="hero-portrait_image"
+                                loading="eager"
+                                decoding="async"
+                            />
+                        </div>
+                        <div className="hero-note_card">
+                            <span className="card-label">Current focus</span>
+                            <p>I&apos;m learning how to be the best human being I can be.</p>
+                        </div>
+                    </article>
+
+                    <div className="hero-metrics_grid">
+                        {heroMetrics.map((metric) => (
+                            <article key={metric.id} className="metric-card">
+                                <strong>{metric.value}</strong>
+                                <span>{metric.label}</span>
+                                <p>{metric.detail}</p>
+                            </article>
+                        ))}
+                    </div>
+                </div>
             </div>
         </section>
-    )
-}
-export default Hero
+    );
+};
+
+export default Hero;

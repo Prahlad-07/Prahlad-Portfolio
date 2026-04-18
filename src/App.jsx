@@ -1,42 +1,42 @@
-import Navbar from "./sections/Navbar.jsx";
-import Hero from "./sections/Hero.jsx";
-import About from "./sections/About.jsx";
-import Projects from "./sections/Projects.jsx";
-import Footer from "./sections/Footer.jsx";
-import Experience from "./sections/Experience.jsx";
-import Testimonials from "./sections/Testimonials.jsx";
-import Contact from "./sections/Contact.jsx";
-import ErrorBoundary from "./components/ErrorBoundary.jsx";
-import CodingProfiles from "./sections/CodingProfiles.jsx";
-
+import Navbar from './sections/Navbar.jsx';
+import Hero from './sections/Hero.jsx';
+import Experience from './sections/Experience.jsx';
+import About from './sections/About.jsx';
+import Skills from './sections/Skills.jsx';
+import Projects from './sections/Projects.jsx';
+import Testimonials from './sections/Testimonials.jsx';
+import Contact from './sections/Contact.jsx';
+import Footer from './sections/Footer.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 
 const App = () => {
     return (
-        <main className="max-w-[1200px] mx-auto pb-12">
-            <Navbar/>
+        <main className="portfolio-app">
+            <Navbar />
             <ErrorBoundary fallbackText="Hero section failed to load.">
-                <Hero/>
-            </ErrorBoundary>
-            <ErrorBoundary fallbackText="About section failed to load.">
-                <About/>
-            </ErrorBoundary>
-            <ErrorBoundary fallbackText="Projects section failed to load.">
-                <Projects/>
+                <Hero />
             </ErrorBoundary>
             <ErrorBoundary fallbackText="Experience section failed to load.">
-                <Experience/>
+                <Experience />
             </ErrorBoundary>
-            <ErrorBoundary fallbackText="Coding profiles section failed to load.">
-                <CodingProfiles/>
+            <ErrorBoundary fallbackText="About section failed to load.">
+                <About />
             </ErrorBoundary>
-            <ErrorBoundary fallbackText="Highlights section failed to load.">
-                <Testimonials/>
+            <ErrorBoundary fallbackText="Skills section failed to load.">
+                <Skills />
+            </ErrorBoundary>
+            <ErrorBoundary fallbackText="Projects section failed to load.">
+                <Projects />
+            </ErrorBoundary>
+            <ErrorBoundary fallbackText="Recommendations section failed to load.">
+                <Testimonials />
             </ErrorBoundary>
             <ErrorBoundary fallbackText="Contact section failed to load.">
-                <Contact/>
+                <Contact />
             </ErrorBoundary>
-            <Footer/>
+            <Footer />
         </main>
-    )
-}
-export default App
+    );
+};
+
+export default App;

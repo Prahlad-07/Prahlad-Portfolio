@@ -1,7 +1,10 @@
 {
-  "name": "portfolio",
+  "name": "prahlad-portfolio",
+  "description": "Modern React + Vite portfolio with 3D hero, projects showcase, recommendations, and working contact form",
+  "author": "Prahlad Yadav",
+  "license": "MIT",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

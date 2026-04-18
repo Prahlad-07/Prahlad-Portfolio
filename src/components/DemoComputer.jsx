@@ -3,6 +3,7 @@ import { useGLTF } from '@react-three/drei';
 import { LinearFilter, MeshBasicMaterial, SRGBColorSpace, VideoTexture } from 'three';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import PropTypes from 'prop-types';
 
 const DEFAULT_TEXTURE = '/textures/project/project1.mp4';
 
@@ -108,6 +109,10 @@ const DemoComputer = ({ texture = DEFAULT_TEXTURE, ...props }) => {
     }, [texture]);
 
     return <primitive ref={groupRef} object={model} {...props} dispose={null} />;
+};
+
+DemoComputer.propTypes = {
+    texture: PropTypes.string,
 };
 
 export default DemoComputer;

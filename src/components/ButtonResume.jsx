@@ -1,4 +1,6 @@
-const ButtonResume = ({ name, isBeam = false, containerClas, onClick }) => {
+import PropTypes from 'prop-types';
+
+const ButtonResume = ({ name, isBeam = false, containerClas = '', onClick }) => {
     return (
         <button type="button" className={`btn ${containerClas}`} onClick={onClick}>
             {isBeam && (
@@ -10,6 +12,13 @@ const ButtonResume = ({ name, isBeam = false, containerClas, onClick }) => {
             {name}
         </button>
     );
+};
+
+ButtonResume.propTypes = {
+    name: PropTypes.string.isRequired,
+    isBeam: PropTypes.bool,
+    containerClas: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 export default ButtonResume;

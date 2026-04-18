@@ -1,4 +1,6 @@
-const ButtonScrollContact = ({ name, isBeam = false, containerClas }) => {
+import PropTypes from 'prop-types';
+
+const ButtonScrollContact = ({ name, isBeam = false, containerClas = '' }) => {
     const handleScroll = () => {
         const contactSection = document.getElementById("contact");
         if (contactSection) {
@@ -17,6 +19,12 @@ const ButtonScrollContact = ({ name, isBeam = false, containerClas }) => {
             {name}
         </button>
     );
+};
+
+ButtonScrollContact.propTypes = {
+    name: PropTypes.string.isRequired,
+    isBeam: PropTypes.bool,
+    containerClas: PropTypes.string,
 };
 
 export default ButtonScrollContact;

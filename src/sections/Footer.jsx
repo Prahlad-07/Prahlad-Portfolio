@@ -1,54 +1,45 @@
-import { personalInfo } from "../constants/index.js";
+import { navLinks, personalInfo } from '../constants/index.js';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-    const getExternalProps = (href) =>
-        href.startsWith('http')
-            ? { target: '_blank', rel: 'noopener noreferrer' }
-            : {};
-
-    const socialProfiles = [
-        { href: personalInfo.socialLinks.linkedin, label: 'LinkedIn', icon: '/assets/icons8-linkedin.svg' },
-        { href: personalInfo.socialLinks.github, label: 'GitHub', icon: '/assets/github.svg' },
-        { href: personalInfo.socialLinks.instagram, label: 'Instagram', icon: '/assets/instagram.svg' },
-    ].filter((item) => item.href && item.href !== '#');
 
     return (
-        <section className="c-space pt-10 pb-6 border-t border-black-300/70 flex justify-between items-start flex-wrap gap-6 mt-24 footer-shell">
-            <div className="max-w-xl">
-                <p className="footer-title">
-                    Building reliable products with clear engineering.
-                </p>
-                <p className="text-white-500 mt-2">
-                    Open to full-time SDE roles, backend-focused internships, and high-impact collaborations.
-                </p>
-                <div className="footer-links">
-                    <a href={`mailto:${personalInfo.email}`} className="footer-chip">
-                        Email
+        <footer className="site-footer">
+            <div className="shell footer-layout">
+                <div className="footer-copy">
+                    <a href="#home" className="footer-brand">
+                        {personalInfo.fullName}
                     </a>
-                    <a href="#contact" className="footer-chip">
-                        Contact
-                    </a>
+                    <p>
+                        Software engineer focused on scalable backend systems, polished product execution,
+                        and reliable delivery.
+                    </p>
                 </div>
-            </div>
 
-            {socialProfiles.length > 0 && (
-                <div className="flex gap-3">
-                    {socialProfiles.map((item) => (
-                        <div className="social-icon" key={item.label}>
-                            <a href={item.href} {...getExternalProps(item.href)} className="social-link" aria-label={item.label}>
-                                <img src={item.icon} alt={item.label} className="social-image" loading="lazy" decoding="async" />
+                <div className="footer-links_group">
+                    <div className="footer-nav">
+                        {navLinks.slice(1).map((link) => (
+                            <a key={link.id} href={link.href}>
+                                {link.name}
                             </a>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+
+                    <div className="footer-nav">
+                        <a href={`mailto:${personalInfo.email}`}>Email</a>
+                        <a href={personalInfo.socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+                            LinkedIn
+                        </a>
+                        <a href={personalInfo.socialLinks.github} target="_blank" rel="noopener noreferrer">
+                            GitHub
+                        </a>
+                    </div>
                 </div>
-            )}
 
-            <p className="text-white-500 w-full">
-                © {currentYear} {personalInfo.firstName}. All rights reserved.
-            </p>
-        </section>
-    )
-}
+                <p className="footer-meta">© {currentYear} {personalInfo.firstName}. Crafted with React and a design-first mindset.</p>
+            </div>
+        </footer>
+    );
+};
 
-export default Footer
+export default Footer;

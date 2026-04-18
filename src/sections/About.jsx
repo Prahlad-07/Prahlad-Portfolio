@@ -1,234 +1,121 @@
-import {lazy, Suspense, useEffect, useRef, useState} from 'react'
-import ButtonResume from "../components/ButtonResume.jsx";
-import { personalInfo } from "../constants/index.js";
-import {useMediaQuery} from "react-responsive";
+import { useState } from 'react';
+import SectionHeader from '../components/SectionHeader.jsx';
+import { aboutHighlights, achievements, personalInfo } from '../constants/index.js';
 
-const Globe = lazy(() => import('react-globe.gl'));
+const copyText = async (value) => {
+    if (!value) return false;
 
-const About = () => {
-
-    const globeRef = useRef();
-    const aboutRef = useRef();
-    const [hasCopied, setHasCopied] = useState(false);
-    const [shouldRenderGlobe, setShouldRenderGlobe] = useState(false);
-    const isMobile = useMediaQuery({ maxWidth: 768 });
-
-    useEffect(() => {
-        const section = aboutRef.current;
-        if (!section) return;
-        if (typeof window.IntersectionObserver === 'undefined') {
-            setShouldRenderGlobe(true);
-            return;
-        }
-
-        const observer = new window.IntersectionObserver(
-            ([entry]) => {
-                if (!entry.isIntersecting) return;
-                setShouldRenderGlobe(true);
-                observer.disconnect();
-            },
-            { threshold: 0.1, rootMargin: '220px 0px' }
-        );
-
-        observer.observe(section);
-
-        return () => observer.disconnect();
-    }, []);
-
-    useEffect(() => {
-        const section = aboutRef.current;
-        if (!section || !shouldRenderGlobe) return;
-        const supportsMatchMedia = typeof window.matchMedia === 'function';
-        if (supportsMatchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-        let intervalId = null;
-
-        const rotateStep = () => {
-            if (!globeRef.current) return;
-            const globe = globeRef.current;
-            const currentPoint = globe.pointOfView();
-            globe.pointOfView(
-                { lat: currentPoint.lat, lng: currentPoint.lng + 0.22 },
-                140
-            );
-        };
-
-        const startRotation = () => {
-            if (intervalId) return;
-            intervalId = window.setInterval(rotateStep, 180);
-        };
-
-        const stopRotation = () => {
-            if (!intervalId) return;
-            clearInterval(intervalId);
-            intervalId = null;
-        };
-
-        if (typeof window.IntersectionObserver === 'undefined') {
-            startRotation();
-            return () => {
-                stopRotation();
-            };
-        }
-
-        const observer = new window.IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) startRotation();
-                    else stopRotation();
-                });
-            },
-            { threshold: 0.2 }
-        );
-
-        observer.observe(section);
-
-        return () => {
-            observer.disconnect();
-            stopRotation();
-        };
-    }, [shouldRenderGlobe]);
-
-    const handleCopy = () => {
-        navigator.clipboard.writeText(personalInfo.email);
-        setHasCopied(true);
-        setTimeout(() => {
-            setHasCopied(false);
-        }, 2000)
+    if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+        return true;
     }
 
+    const textArea = document.createElement('textarea');
+    textArea.value = value;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    textArea.style.pointerEvents = 'none';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    const copied = document.execCommand('copy');
+    document.body.removeChild(textArea);
+
+    return copied;
+};
+
+const About = () => {
+    const [hasCopied, setHasCopied] = useState(false);
+
+    const handleCopyEmail = async () => {
+        const copied = await copyText(personalInfo.email);
+        if (!copied) return;
+
+        setHasCopied(true);
+        window.setTimeout(() => setHasCopied(false), 2200);
+    };
+
     return (
-        <section ref={aboutRef} className="c-space my-24 section-wrap" id="about">
-            <div className="about-top-grid">
-                <div className="about-top-card">
-                    <div className="grid-container">
-                        <img src="/assets/grid1.png" alt="grid-1" className="about-top-image" loading="lazy" decoding="async"/>
+        <section className="section-wrap" id="about">
+            <div className="shell">
+                <SectionHeader
+                    eyebrow="About Me"
+                    title="Engineering that balances depth, clarity, and execution."
+                    description="I bring competitive programming rigor, backend engineering focus, and a strong bias toward shipping reliable work that feels thoughtfully built."
+                />
 
-                        <div className="about-card-body">
-                            <p className="grid-headtext">
-                                Hi, I am Prahlad
-                            </p>
-                            <ul className="about-list">
-                                <li>B.Tech in Information Technology at Government Engineering College Bilaspur (2022-2026), CGPA: 8.1/10.0.</li>
-                                <li>Relevant coursework: OOPs, DBMS, DSA, Operating Systems, Computer Networks, System Design, Backend Engineering.</li>
-                                <li>Software engineer focused on Spring Boot backend systems, scalable APIs, and production-ready products.</li>
-                                <li>Strong competitive programmer with consistent performance across major coding platforms.</li>
-                            </ul>
+                <div className="about-layout">
+                    <article className="premium-card about-story_card">
+                        <p className="about-story_lead">
+                            I&apos;m a backend-focused software engineer who enjoys turning complex requirements into dependable systems and clean user-facing experiences.
+                        </p>
+                        <p className="about-story_text">
+                            I&apos;m pursuing a B.Tech in Information Technology at Government Engineering College Bilaspur and currently working at Newton School, where I&apos;m building compiler and runtime abstractions that demand precision, debugging discipline, and systems thinking.
+                        </p>
+                        <p className="about-story_text">
+                            My strongest work sits at the intersection of backend architecture, problem solving, and product-minded implementation. I care about code quality, maintainability, and making software feel solid for both users and teams.
+                        </p>
+
+                        <div className="detail-grid">
+                            <article className="detail-card">
+                                <span className="card-label">Education</span>
+                                <strong>B.Tech in Information Technology</strong>
+                                <p>Government Engineering College Bilaspur, 2022-2026</p>
+                            </article>
+                            <article className="detail-card">
+                                <span className="card-label">Core strengths</span>
+                                <strong>Backend systems and problem solving</strong>
+                                <p>Spring Boot, APIs, system design, debugging, and DSA.</p>
+                            </article>
+                            <article className="detail-card">
+                                <span className="card-label">Work style</span>
+                                <strong>Ownership with clean execution</strong>
+                                <p>Fast learner, structured builder, and dependable collaborator.</p>
+                            </article>
                         </div>
-                    </div>
-                </div>
 
-                <div className="about-top-card">
-                    <div className="grid-container">
-                        <img src="/assets/Grid2New.png" alt="grid-2" className="about-top-image" loading="lazy" decoding="async"/>
-                        <div className="about-card-body">
-                            <p className="grid-headtext">
-                                Achievements
-                            </p>
-                            <ul className="about-list">
-                                <li>AIR 311 in ICPC Kanpur Preliminary Round among top competitive programming teams in India.</li>
-                                <li>Ranked 1446 out of 25,000+ teams (82,000+ participants) in Amazon ML Challenge 2025.</li>
-                                <li>Secured 2nd position in CSVTU Coding Onsite Round and won Algo-War 2K26 and Tech-Nova 2024.</li>
-                                <li>LeetCode: Guardian (max rating 2140), CodeChef: 4-star (max 1950+), Codeforces: Expert (max 1680).</li>
-                                <li>HackerRank: 6-star in Problem Solving.</li>
-                            </ul>
+                        <div className="about-actions">
+                            <button type="button" className="button-secondary" onClick={handleCopyEmail}>
+                                {hasCopied ? 'Email Copied' : 'Copy Email'}
+                            </button>
+                            <a
+                                href={personalInfo.resumeUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="button-ghost"
+                            >
+                                Open Resume
+                            </a>
                         </div>
-                    </div>
-                </div>
+                    </article>
 
-                <div className="about-top-card md:col-span-2 xl:col-span-1">
-                    <div className="grid-container">
-                        <div className="about-globe-wrap">
-                            {shouldRenderGlobe ? (
-                                <Suspense fallback={<div className="about-globe-placeholder" aria-hidden="true"/>}>
-                                    <Globe
-                                        ref={globeRef}
-                                        height={isMobile ? 220 : 250}
-                                        width={isMobile ? 220 : 250}
-                                        backgroundColor="rgba(0, 0, 0, 0)"
-                                        backgroundImageOpacity={0.5}
-                                        showAtmosphere={true}
-                                        showGraticules
-                                        labelsData={[{ lat: 28.6139, lng: 77.2090, text: 'Delhi, India', color: 'white', size: 15 }]}
-                                    />
-                                </Suspense>
-                            ) : (
-                                <div className="about-globe-placeholder" aria-hidden="true"/>
-                            )}
-                        </div>
-                        <div className="about-card-body">
-                            <p className="grid-headtext">
-                                Open to SDE Opportunities
-                            </p>
-                            <ul className="about-list">
-                                <li>Currently working as an SDE + SME Intern at Newton School, building the Jack compilation pipeline and runtime abstractions.</li>
-                                <li>I am open to full-time software engineering roles, internships, and impactful backend-focused opportunities.</li>
-                                <li>Based in India and comfortable collaborating across remote and on-site teams.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="about-bottom-grid">
-                <div className="xl:col-span-2">
-                    <div className="grid-container">
-                        <img src="/assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain" loading="lazy" decoding="async"/>
-
-                        <div>
-                            <p className="grid-headtext">
-                                Technical Skills
-                            </p>
-                            <p className="grid-subtext">
-                                • Languages: Java, Kotlin, C/C++, JavaScript, SQL, HTML, Tailwind CSS.
-                            </p>
-                            <p className="grid-subtext">
-                                • Cloud and dev tools: Git/GitHub, AWS, Docker, Maven, Gradle, Postman.
-                            </p>
-                            <p className="grid-subtext">
-                                • Backend ecosystem: Spring Boot, Spring Security, Hibernate, REST APIs, JWT, Microservices, Low-Level Design.
-                            </p>
-                            <p className="grid-subtext">
-                                • Built production-oriented projects including BookMySalon and Bg-Removal with secure auth and payment integration.
-                            </p>
-                            <p className="grid-subtext">
-                                • My latest resume is available instantly from the button below.
-                            </p>
-                            <ButtonResume
-                                name="Resume"
-                                isBeam
-                                containerClas="w-full mt-10"
-                                onClick={() =>
-                                    window.open(
-                                        personalInfo.resumeUrl,
-                                        '_blank'
-                                    )
-                                }
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="xl:col-span-1">
-                    <div className="grid-container">
-                        <img src="/assets/grid4.png" alt="grid-4" className="w-full sm:h-[276px] h-fit object-contain" loading="lazy" decoding="async"/>
-
-                        <div className="space-y-2">
-                            <p className="grid-subtext text-center">
-                                Contact Me
-                            </p>
-                            <div className="copy-container" onClick={handleCopy}>
-                                <img src={hasCopied ? '/assets/icons8-checkmark.svg' : '/assets/copy.svg'} alt="copy"/>
-                                <p className="xl:text-xl md:text-md font-medium text-gray_gradient text-white">
-                                    {personalInfo.email}
-                                </p>
+                    <div className="about-aside">
+                        <article className="premium-card about-achievements_card">
+                            <span className="card-label">Selected achievements</span>
+                            <div className="achievement-list">
+                                {achievements.map((achievement) => (
+                                    <div key={achievement} className="achievement-item">
+                                        <span className="achievement-dot" aria-hidden="true" />
+                                        <p>{achievement}</p>
+                                    </div>
+                                ))}
                             </div>
+                        </article>
+
+                        <div className="about-highlights_grid">
+                            {aboutHighlights.map((item) => (
+                                <article key={item.id} className="premium-card highlight-card">
+                                    <span className="card-label">{item.title}</span>
+                                    <p>{item.text}</p>
+                                </article>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
-    )
-}
-export default About
+    );
+};
+
+export default About;

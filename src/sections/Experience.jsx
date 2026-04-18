@@ -1,107 +1,120 @@
-import {lazy, Suspense, useEffect, useRef, useState} from 'react'
-import {Canvas} from "@react-three/fiber";
-import {workExperiences} from "../constants/index.js";
-import {OrbitControls} from "@react-three/drei";
-import CanvasLoader from "../components/CanvasLoader.jsx";
-import {useMediaQuery} from "react-responsive";
+import { lazy, Suspense, useState } from 'react';
+import SectionHeader from '../components/SectionHeader.jsx';
+import { workExperiences } from '../constants/index.js';
+import useAdaptiveFlags from '../hooks/useAdaptiveFlags.js';
+import useSectionObserver from '../hooks/useSectionObserver.js';
 
-const Developer = lazy(() => import('../components/Developer.jsx'));
+const ExperienceSceneCanvas = lazy(() => import('../components/ExperienceSceneCanvas.jsx'));
 
 const Experience = () => {
-    const sectionRef = useRef(null);
-    const isMobile = useMediaQuery({ maxWidth: 768 });
+    const [animationName, setAnimationName] = useState(workExperiences[0]?.animation || 'idle');
+    const { elementRef, isVisible, hasBeenVisible } = useSectionObserver({
+        threshold: 0.16,
+        rootMargin: '220px 0px',
+    });
+    const { isMobile, canRenderHeavyScene } = useAdaptiveFlags();
 
-    const [animationName, setAnimationName] = useState('idle');
-    const [isSectionVisible, setIsSectionVisible] = useState(false);
-    const [shouldRenderCanvas, setShouldRenderCanvas] = useState(false);
-
-    useEffect(() => {
-        const section = sectionRef.current;
-        if (!section) return;
-        if (typeof window.IntersectionObserver === 'undefined') {
-            setIsSectionVisible(true);
-            setShouldRenderCanvas(true);
-            return;
-        }
-
-        const observer = new window.IntersectionObserver(
-            ([entry]) => {
-                setIsSectionVisible(entry.isIntersecting);
-                if (entry.isIntersecting) {
-                    setShouldRenderCanvas(true);
-                }
-            },
-            { threshold: 0.16, rootMargin: '220px 0px' },
-        );
-
-        observer.observe(section);
-
-        return () => observer.disconnect();
-    }, []);
+    const shouldRenderScene = canRenderHeavyScene && hasBeenVisible;
 
     return (
-        <section ref={sectionRef} className="c-space my-24 section-wrap" id="experience">
-            <div className="w-full text-white-600">
-                <h3 className="head-text">
-                    My Work Experience
-                </h3>
+        <section ref={elementRef} className="section-wrap" id="experience">
+            <div className="shell">
+                <SectionHeader
+                    eyebrow="Experience"
+                    title="Experience built around learning fast, shipping reliably, and owning the details."
+                    description="My internships reflect a backend-first path: systems work, API delivery, debugging under constraints, and disciplined engineering fundamentals."
+                />
+
                 <div className="work-container">
                     <div className="work-canvas">
-                        {shouldRenderCanvas ? (
-                            <Canvas
-                                dpr={isMobile ? [0.72, 1] : [0.9, 1.2]}
-                                frameloop={isSectionVisible ? 'always' : 'never'}
-                                gl={{ antialias: false, powerPreference: 'high-performance' }}
-                                performance={{ min: 0.5 }}
+                        {shouldRenderScene ? (
+                            <Suspense
+                                fallback={
+                                    <div className="canvas-placeholder canvas-placeholder_tall">
+                                        <img
+                                            src="/assets/Prahlad_Yadav_Photo.jpeg"
+                                            alt="Prahlad Yadav portrait"
+                                            className="canvas-placeholder_visual"
+                                            loading="lazy"
+                                            decoding="async"
+                                        />
+                                        <p className="canvas-placeholder_text">Preparing animated profile...</p>
+                                    </div>
+                                }
                             >
-                                <ambientLight intensity={7} />
-                                <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-                                <directionalLight position={[0, 0, 10]} intensity={1}/>
-                                <OrbitControls enableZoom={false} enablePan={false} enableRotate={!isMobile} maxPolarAngle={Math.PI/2}/>
-                                <Suspense fallback={<CanvasLoader/>}>
-                                    <Developer position-y={-3} scale={3} animationName={animationName}/>
-                                </Suspense>
-                            </Canvas>
+                                <ExperienceSceneCanvas
+                                    animationName={animationName}
+                                    isActive={isVisible}
+                                    isMobile={isMobile}
+                                />
+                            </Suspense>
                         ) : (
                             <div className="canvas-placeholder canvas-placeholder_tall">
-                                <p className="canvas-placeholder_text">Loading 3D model on scroll...</p>
+                                <img
+                                    src="/assets/Prahlad_Yadav_Photo.jpeg"
+                                    alt="Prahlad Yadav portrait"
+                                    className="canvas-placeholder_visual"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                                <p className="canvas-placeholder_text">
+                                    Animated preview loads on devices that can handle it smoothly.
+                                </p>
                             </div>
                         )}
                     </div>
+
                     <div className="work-content">
-                        <div className="sm:py-10 py-5 sm:px-5 px-2.5">
-                            {workExperiences.map(({id, name, pos, icon, duration, title, animation}, index) => (
-                                <div
+                        <div className="work-content_inner">
+                            {workExperiences.map(({ id, name, pos, icon, duration, summary, highlights, animation }, index) => (
+                                <article
                                     key={id}
-                                    className="work-content_container group"
-                                    onClick={()=> setAnimationName(animation.toLowerCase())}
-                                    onPointerOver={()=> setAnimationName(animation.toLowerCase())}
-                                    onPointerOut={()=> setAnimationName('idle')}
+                                    className="work-content_container"
+                                    onClick={() => setAnimationName(animation.toLowerCase())}
+                                    onPointerOver={() => setAnimationName(animation.toLowerCase())}
+                                    onPointerOut={() => setAnimationName('idle')}
+                                    onFocus={() => setAnimationName(animation.toLowerCase())}
+                                    onBlur={() => setAnimationName('idle')}
+                                    tabIndex={0}
                                 >
                                     <div className="work-timeline">
                                         <div className="work-content_logo">
-                                            <img src={icon} alt="logo" className="w-full h-full" loading="lazy" decoding="async"/>
+                                            <img
+                                                src={icon}
+                                                alt={`${name} logo`}
+                                                className="work-content_logoImage"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
                                         </div>
-                                        {index !== workExperiences.length - 1 && <div className="work-content_bar"/>}
+                                        {index !== workExperiences.length - 1 ? (
+                                            <div className="work-content_bar" />
+                                        ) : null}
                                     </div>
-                                    <div className="sm:p-5 px-2.5 py-5">
-                                        <p className="font-bold text-white-800">
-                                            {name}
-                                        </p>
-                                        <p className="text-sm mb-5">
-                                            {pos} -- {duration}
-                                        </p>
-                                        <p className="group-hover:text-white transition ease-in-out duration-500">
-                                            {title}
-                                        </p>
+
+                                    <div className="work-copy">
+                                        <span className="work-duration">{duration}</span>
+                                        <p className="work-company">{name}</p>
+                                        <h3 className="work-position">{pos}</h3>
+                                        <p className="work-summary">{summary}</p>
+
+                                        <div className="work-points">
+                                            {highlights.map((highlight) => (
+                                                <div key={highlight} className="work-point">
+                                                    <span className="achievement-dot" aria-hidden="true" />
+                                                    <p>{highlight}</p>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                </article>
                             ))}
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    )
-}
-export default Experience
+    );
+};
+
+export default Experience;

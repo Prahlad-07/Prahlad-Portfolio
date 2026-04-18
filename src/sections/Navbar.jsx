@@ -1,50 +1,63 @@
-import {useState} from 'react'
-import {navLinks} from "../constants/index.js";
+import { useState } from 'react';
+import { navLinks, personalInfo } from '../constants/index.js';
 
 const Navbar = () => {
-
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleMenu = () => setIsOpen((prevIsOpen) => !prevIsOpen);
     const closeMenu = () => setIsOpen(false);
-
-    const NavItems = () => (
-        <ul className="nav-ul">
-            {navLinks.map(({id, href, name}) => (
-                <li key={id} className="nav-li">
-                    <a href={href} className="nav-li_a" onClick={closeMenu}>
-                        {name}
-                    </a>
-                </li>
-            ))}
-        </ul>
-    );
+    const toggleMenu = () => setIsOpen((previousState) => !previousState);
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 nav-shell">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between items-center py-5 mx-auto c-space">
-                    <a href="/" className="text-neutral-300 font-bold text-xl hover:text-white transition-colors tracking-wide">
-                        Prahlad Yadav
+        <header className="site-header">
+            <div className="shell site-header_inner">
+                <a href="#home" className="site-brand" onClick={closeMenu}>
+                    <span className="site-brand_mark">PY</span>
+                    <span className="site-brand_copy">
+                        <strong>{personalInfo.fullName}</strong>
+                        <small>{personalInfo.role}</small>
+                    </span>
+                </a>
+
+                <button
+                    type="button"
+                    className="site-menu_button"
+                    onClick={toggleMenu}
+                    aria-expanded={isOpen}
+                    aria-controls="site-navigation"
+                    aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                >
+                    {isOpen ? 'Close' : 'Menu'}
+                </button>
+
+                <nav
+                    id="site-navigation"
+                    className={`site-nav ${isOpen ? 'site-nav_open' : ''}`}
+                    aria-label="Primary"
+                >
+                    {navLinks.map((link) => (
+                        <a
+                            key={link.id}
+                            href={link.href}
+                            className="site-nav_link"
+                            onClick={closeMenu}
+                        >
+                            {link.name}
+                        </a>
+                    ))}
+
+                    <a
+                        href={personalInfo.resumeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nav-cta"
+                        onClick={closeMenu}
+                    >
+                        Resume
                     </a>
-
-                    <button onClick={toggleMenu} className="text-neutral-400 hover:text-white
-                        focus:outline-none sm:hidden flex" aria-label="toggle menu">
-                            <img src={isOpen ? "/assets/close.svg" :  "/assets/menu.svg"} alt="toggle" className="w-6 h-6"/>
-                    </button>
-
-                    <nav className="sm:flex hidden">
-                        <NavItems/>
-                    </nav>
-                </div>
-            </div>
-
-            <div className={`nav-sidebar ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
-                <nav className="p-5">
-                    <NavItems/>
                 </nav>
             </div>
         </header>
-    )
+    );
 };
-export default Navbar
+
+export default Navbar;
