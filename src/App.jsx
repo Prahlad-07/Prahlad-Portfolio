@@ -1,7 +1,6 @@
 import Navbar from './sections/Navbar.jsx';
 import Hero from './sections/Hero.jsx';
 import Experience from './sections/Experience.jsx';
-import About from './sections/About.jsx';
 import Skills from './sections/Skills.jsx';
 import Projects from './sections/Projects.jsx';
 import Testimonials from './sections/Testimonials.jsx';
@@ -18,9 +17,6 @@ const App = () => {
             </ErrorBoundary>
             <ErrorBoundary fallbackText="Experience section failed to load.">
                 <Experience />
-            </ErrorBoundary>
-            <ErrorBoundary fallbackText="About section failed to load.">
-                <About />
             </ErrorBoundary>
             <ErrorBoundary fallbackText="Skills section failed to load.">
                 <Skills />

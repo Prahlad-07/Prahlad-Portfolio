@@ -1,19 +1,80 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import SectionHeader from '../components/SectionHeader.jsx';
 import { workExperiences } from '../constants/index.js';
 import useAdaptiveFlags from '../hooks/useAdaptiveFlags.js';
 import useSectionObserver from '../hooks/useSectionObserver.js';
 
-const ExperienceSceneCanvas = lazy(() => import('../components/ExperienceSceneCanvas.jsx'));
+const loadExperienceSceneCanvas = () => import('../components/ExperienceSceneCanvas.jsx');
+const ExperienceSceneCanvas = lazy(loadExperienceSceneCanvas);
 
 const Experience = () => {
     const [animationName, setAnimationName] = useState(workExperiences[0]?.animation || 'idle');
+    const [isScrolling, setIsScrolling] = useState(false);
+    const scrollTimeoutRef = useRef(0);
+    const scrollFrameRef = useRef(0);
+    const scrollingRef = useRef(false);
     const { elementRef, isVisible, hasBeenVisible } = useSectionObserver({
         threshold: 0.16,
-        rootMargin: '220px 0px',
+        rootMargin: '360px 0px',
     });
-    const { isMobile } = useAdaptiveFlags();
+    const { isMobile, prefersReducedMotion, saveData, slowConnection } = useAdaptiveFlags();
     const shouldRenderScene = hasBeenVisible;
+    const isLowPowerMode = isMobile || saveData || slowConnection;
+    const shouldAnimateScene = isVisible && !isScrolling && !prefersReducedMotion;
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+
+        const preloadCanvas = () => {
+            void loadExperienceSceneCanvas();
+        };
+
+        if (typeof window.requestIdleCallback === 'function') {
+            const idleId = window.requestIdleCallback(preloadCanvas, { timeout: 1400 });
+            return () => {
+                window.cancelIdleCallback?.(idleId);
+            };
+        }
+
+        const timeoutId = window.setTimeout(preloadCanvas, 500);
+        return () => window.clearTimeout(timeoutId);
+    }, []);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+
+        const stopScrollState = () => {
+            scrollingRef.current = false;
+            setIsScrolling(false);
+        };
+
+        const markScrolling = () => {
+            if (!scrollingRef.current) {
+                scrollingRef.current = true;
+                setIsScrolling(true);
+            }
+
+            window.clearTimeout(scrollTimeoutRef.current);
+            scrollTimeoutRef.current = window.setTimeout(stopScrollState, 140);
+        };
+
+        const handleScroll = () => {
+            if (scrollFrameRef.current) return;
+
+            scrollFrameRef.current = window.requestAnimationFrame(() => {
+                scrollFrameRef.current = 0;
+                markScrolling();
+            });
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.clearTimeout(scrollTimeoutRef.current);
+            window.cancelAnimationFrame(scrollFrameRef.current);
+        };
+    }, []);
 
     return (
         <section ref={elementRef} className="section-wrap" id="experience">
@@ -43,7 +104,8 @@ const Experience = () => {
                             >
                                 <ExperienceSceneCanvas
                                     animationName={animationName}
-                                    isActive={isVisible}
+                                    isActive={shouldAnimateScene}
+                                    isLowPowerMode={isLowPowerMode}
                                     isMobile={isMobile}
                                 />
                             </Suspense>

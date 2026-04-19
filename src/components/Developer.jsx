@@ -131,4 +131,10 @@ Developer.propTypes = {
     animationName: PropTypes.string,
 };
 
+useGLTF.preload('/models/animations/developer.glb');
+useFBX.preload('/models/animations/idle.fbx');
+useFBX.preload('/models/animations/salute.fbx');
+useFBX.preload('/models/animations/clapping.fbx');
+useFBX.preload('/models/animations/victory.fbx');
+
 export default Developer;
