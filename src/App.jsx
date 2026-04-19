@@ -7,10 +7,12 @@ import Testimonials from './sections/Testimonials.jsx';
 import Contact from './sections/Contact.jsx';
 import Footer from './sections/Footer.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
+import ScrollProgressBar from './components/ScrollProgressBar.jsx';
 
 const App = () => {
     return (
         <main className="portfolio-app">
+            <ScrollProgressBar />
             <Navbar />
             <ErrorBoundary fallbackText="Hero section failed to load.">
                 <Hero />

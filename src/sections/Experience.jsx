@@ -19,8 +19,9 @@ const Experience = () => {
     });
     const { isMobile, prefersReducedMotion, saveData, slowConnection } = useAdaptiveFlags();
     const shouldRenderScene = hasBeenVisible;
-    const isLowPowerMode = isMobile || saveData || slowConnection;
-    const shouldAnimateScene = isVisible && !isScrolling && !prefersReducedMotion;
+    const isLowPowerMode = saveData || slowConnection;
+    const shouldThrottleScene = isMobile || isLowPowerMode;
+    const shouldAnimateScene = isVisible && (!shouldThrottleScene || !isScrolling) && !prefersReducedMotion;
 
     useEffect(() => {
         if (typeof window === 'undefined') return undefined;
@@ -106,6 +107,7 @@ const Experience = () => {
                                     animationName={animationName}
                                     isActive={shouldAnimateScene}
                                     isLowPowerMode={isLowPowerMode}
+                                    isScrolling={isScrolling}
                                     isMobile={isMobile}
                                 />
                             </Suspense>

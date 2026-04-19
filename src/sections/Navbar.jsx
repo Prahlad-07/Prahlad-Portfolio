@@ -1,11 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { navLinks, personalInfo } from '../constants/index.js';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeHref, setActiveHref] = useState('#home');
 
     const closeMenu = () => setIsOpen(false);
     const toggleMenu = () => setIsOpen((previousState) => !previousState);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+
+        const syncHash = () => {
+            setActiveHref(window.location.hash || '#home');
+        };
+
+        syncHash();
+        window.addEventListener('hashchange', syncHash);
+
+        const targets = navLinks
+            .map((link) => document.querySelector(link.href))
+            .filter(Boolean);
+
+        if (!targets.length || typeof window.IntersectionObserver === 'undefined') {
+            return () => window.removeEventListener('hashchange', syncHash);
+        }
+
+        const observer = new window.IntersectionObserver(
+            (entries) => {
+                const visibleEntries = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio);
+
+                const activeSection = visibleEntries[0]?.target?.id;
+                if (activeSection) {
+                    setActiveHref(`#${activeSection}`);
+                }
+            },
+            {
+                threshold: [0.18, 0.35, 0.6],
+                rootMargin: '-24% 0px -52% 0px',
+            },
+        );
+
+        targets.forEach((target) => observer.observe(target));
+
+        return () => {
+            window.removeEventListener('hashchange', syncHash);
+            observer.disconnect();
+        };
+    }, []);
 
     return (
         <header className="site-header">
@@ -38,8 +82,13 @@ const Navbar = () => {
                         <a
                             key={link.id}
                             href={link.href}
-                            className="site-nav_link"
-                            onClick={closeMenu}
+                            className={`site-nav_link ${
+                                activeHref === link.href ? 'site-nav_linkActive' : ''
+                            }`}
+                            onClick={() => {
+                                setActiveHref(link.href);
+                                closeMenu();
+                            }}
                         >
                             {link.name}
                         </a>
