@@ -1,0 +1,128 @@
+import { useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
+import ThemeContext from './theme-context.js';
+
+const THEME_STORAGE_KEY = 'portfolio-theme';
+
+const getStoredTheme = () => {
+    if (typeof window === 'undefined') return null;
+
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null;
+};
+
+const getSystemTheme = (mediaQuery) => {
+    if (mediaQuery) return mediaQuery.matches ? 'dark' : 'light';
+    if (typeof window === 'undefined') return 'light';
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+
+const applyTheme = (theme) => {
+    if (typeof document === 'undefined') return;
+
+    const root = document.documentElement;
+    root.dataset.theme = theme;
+    root.style.colorScheme = theme;
+
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', theme === 'dark' ? '#0d1117' : '#f8f4ec');
+    }
+};
+
+export const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState(() => {
+        if (typeof document === 'undefined') return 'light';
+        return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    });
+    const [themePreference, setThemePreference] = useState(() => getStoredTheme());
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const syncTheme = () => {
+            const storedTheme = getStoredTheme();
+            const resolvedTheme = storedTheme || getSystemTheme(mediaQuery);
+
+            setThemePreference(storedTheme);
+            setTheme(resolvedTheme);
+            applyTheme(resolvedTheme);
+        };
+
+        syncTheme();
+
+        const readyFrame = window.requestAnimationFrame(() => {
+            document.documentElement.classList.add('theme-ready');
+        });
+
+        const handleMediaChange = () => {
+            if (!getStoredTheme()) {
+                const nextTheme = getSystemTheme(mediaQuery);
+                setThemePreference(null);
+                setTheme(nextTheme);
+                applyTheme(nextTheme);
+            }
+        };
+
+        const handleStorage = (event) => {
+            if (event.key === THEME_STORAGE_KEY) {
+                syncTheme();
+            }
+        };
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', handleMediaChange);
+        } else {
+            mediaQuery.addListener(handleMediaChange);
+        }
+
+        window.addEventListener('storage', handleStorage);
+
+        return () => {
+            window.cancelAnimationFrame(readyFrame);
+            window.removeEventListener('storage', handleStorage);
+
+            if (typeof mediaQuery.removeEventListener === 'function') {
+                mediaQuery.removeEventListener('change', handleMediaChange);
+            } else {
+                mediaQuery.removeListener(handleMediaChange);
+            }
+        };
+    }, []);
+
+    const updateThemePreference = (nextTheme) => {
+        if (typeof window !== 'undefined') {
+            if (nextTheme) {
+                window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+            } else {
+                window.localStorage.removeItem(THEME_STORAGE_KEY);
+            }
+        }
+
+        const resolvedTheme = nextTheme || getSystemTheme();
+        setThemePreference(nextTheme);
+        setTheme(resolvedTheme);
+        applyTheme(resolvedTheme);
+    };
+
+    const contextValue = useMemo(
+        () => ({
+            isDark: theme === 'dark',
+            theme,
+            themePreference,
+            setThemePreference: updateThemePreference,
+            toggleTheme: () => updateThemePreference(theme === 'dark' ? 'light' : 'dark'),
+        }),
+        [theme, themePreference],
+    );
+
+    return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
+};
+
+ThemeProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+export default ThemeProvider;

@@ -3,6 +3,7 @@ import SectionHeader from '../components/SectionHeader.jsx';
 import { workExperiences } from '../constants/index.js';
 import useAdaptiveFlags from '../hooks/useAdaptiveFlags.js';
 import useSectionObserver from '../hooks/useSectionObserver.js';
+import useTheme from '../hooks/useTheme.js';
 
 const loadExperienceSceneCanvas = () => import('../components/ExperienceSceneCanvas.jsx');
 const ExperienceSceneCanvas = lazy(loadExperienceSceneCanvas);
@@ -17,6 +18,7 @@ const Experience = () => {
         threshold: 0.16,
         rootMargin: '360px 0px',
     });
+    const { isDark } = useTheme();
     const { isMobile, prefersReducedMotion, saveData, slowConnection } = useAdaptiveFlags();
     const shouldRenderScene = hasBeenVisible;
     const isLowPowerMode = saveData || slowConnection;
@@ -106,6 +108,7 @@ const Experience = () => {
                                 <ExperienceSceneCanvas
                                     animationName={animationName}
                                     isActive={shouldAnimateScene}
+                                    isDark={isDark}
                                     isLowPowerMode={isLowPowerMode}
                                     isScrolling={isScrolling}
                                     isMobile={isMobile}

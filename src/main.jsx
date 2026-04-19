@@ -3,10 +3,13 @@ import './index.css'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import SmoothScrollManager from './components/SmoothScrollManager.jsx'
+import ThemeProvider from './components/ThemeProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <ErrorBoundary>
-    <SmoothScrollManager />
-    <App />
+    <ThemeProvider>
+      <SmoothScrollManager />
+      <App />
+    </ThemeProvider>
   </ErrorBoundary>,
 )

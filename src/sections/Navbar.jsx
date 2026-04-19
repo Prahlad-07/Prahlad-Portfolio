@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ThemeToggleButton from '../components/ThemeToggleButton.jsx';
 import { navLinks, personalInfo } from '../constants/index.js';
 
 const Navbar = () => {
@@ -93,6 +94,8 @@ const Navbar = () => {
                             {link.name}
                         </a>
                     ))}
+
+                    <ThemeToggleButton />
 
                     <a
                         href={personalInfo.resumeUrl}
