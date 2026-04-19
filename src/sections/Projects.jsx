@@ -2,12 +2,29 @@ import { useEffect, useRef, useState } from 'react';
 import SectionHeader from '../components/SectionHeader.jsx';
 import { myProjects } from '../constants/index.js';
 
+const scrollItemIntoContainer = (container, item) => {
+    if (!container || !item) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    const leftOffset = itemRect.left - containerRect.left;
+    const targetLeft =
+        container.scrollLeft + leftOffset - (container.clientWidth - itemRect.width) / 2;
+
+    container.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: 'smooth',
+    });
+};
+
 const Projects = () => {
     const [activeProjectIndex, setActiveProjectIndex] = useState(0);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [activeImageOrientation, setActiveImageOrientation] = useState('landscape');
     const projectTabRefs = useRef([]);
     const thumbnailRefs = useRef([]);
+    const projectListRef = useRef(null);
+    const thumbnailListRef = useRef(null);
 
     const activeProject = myProjects[activeProjectIndex];
     const activeImages = activeProject.images;
@@ -26,20 +43,12 @@ const Projects = () => {
 
     useEffect(() => {
         const activeTab = projectTabRefs.current[activeProjectIndex];
-        activeTab?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center',
-        });
+        scrollItemIntoContainer(projectListRef.current, activeTab);
     }, [activeProjectIndex]);
 
     useEffect(() => {
         const activeThumbnail = thumbnailRefs.current[activeImageIndex];
-        activeThumbnail?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-            inline: 'center',
-        });
+        scrollItemIntoContainer(thumbnailListRef.current, activeThumbnail);
     }, [activeImageIndex, activeProjectIndex]);
 
     useEffect(() => {
@@ -82,17 +91,17 @@ const Projects = () => {
                         '--project-secondary': activeProject.theme.secondary,
                     }}
                 >
-                    <div className="projects-command">
-                        <div className="projects-command_intro">
+                    <div className="projects-rail">
+                        <div className="projects-rail_top">
                             <span className="card-label">Project Showcase</span>
-                            <p className="projects-command_note">
+                            <p className="projects-rail_note">
                                 A tighter, more premium way to scan everything I have built. Pick a project
                                 from the deck, then explore its story and screenshots in one focused stage.
                             </p>
                         </div>
 
-                        <div className="projects-command_status">
-                            <span className="projects-command_count">
+                        <div className="projects-rail_controls">
+                            <span className="projects-counter">
                                 {activeProjectNumber} / {totalProjects}
                             </span>
                             <div className="projects-arrow_group">
@@ -114,60 +123,58 @@ const Projects = () => {
                                 </button>
                             </div>
                         </div>
+
+                        <div className="projects-rail_list" aria-label="Project list" ref={projectListRef}>
+                            {myProjects.map((project, index) => (
+                                <button
+                                    key={project.id}
+                                    type="button"
+                                    ref={(node) => {
+                                        projectTabRefs.current[index] = node;
+                                    }}
+                                    className={`projects-rail_item ${
+                                        index === activeProjectIndex ? 'projects-rail_itemActive' : ''
+                                    }`}
+                                    style={{
+                                        '--item-primary': project.theme.primary,
+                                        '--item-secondary': project.theme.secondary,
+                                    }}
+                                    onClick={() => setActiveProjectIndex(index)}
+                                    aria-pressed={index === activeProjectIndex}
+                                >
+                                    <span className="projects-rail_mark">{project.mark}</span>
+                                    <span className="projects-rail_copy">
+                                        <strong>{project.title}</strong>
+                                        <small>
+                                            {project.category} ·{' '}
+                                            {String(project.images.length).padStart(2, '0')} shots
+                                        </small>
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="projects-nav" aria-label="Project list">
-                        {myProjects.map((project, index) => (
-                            <button
-                                key={project.id}
-                                type="button"
-                                ref={(node) => {
-                                    projectTabRefs.current[index] = node;
-                                }}
-                                className={`projects-nav_item ${
-                                    index === activeProjectIndex ? 'projects-nav_itemActive' : ''
-                                }`}
-                                style={{
-                                    '--item-primary': project.theme.primary,
-                                    '--item-secondary': project.theme.secondary,
-                                }}
-                                onClick={() => setActiveProjectIndex(index)}
-                                aria-pressed={index === activeProjectIndex}
-                            >
-                                <span className="projects-nav_mark">{project.mark}</span>
-                                <span className="projects-nav_body">
-                                    <strong>{project.title}</strong>
-                                    <small>{project.category}</small>
-                                </span>
-                                <span className="projects-nav_count">
-                                    {String(project.images.length).padStart(2, '0')} shots
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-
-                    <div className="projects-stage">
-                        <article className="projects-story">
-                            <div className="projects-story_meta">
+                    <div className="projects-spotlight">
+                        <article className="projects-spotlight_copy">
+                            <div className="projects-spotlight_meta">
                                 <span>{activeProject.category}</span>
                                 <span>{activeProject.year}</span>
                                 <span>{activeProject.repoState}</span>
                             </div>
 
-                            <div className="projects-story_header">
-                                <span className="projects-story_index">{activeProjectNumber}</span>
-                                <div className="projects-story_heading">
-                                    <h3>{activeProject.title}</h3>
-                                    <p className="projects-story_summary">{activeProject.summary}</p>
-                                </div>
+                            <div className="projects-spotlight_titleWrap">
+                                <span className="projects-spotlight_watermark">{activeProject.mark}</span>
+                                <h3>{activeProject.title}</h3>
                             </div>
 
-                            <p className="projects-story_description">{activeProject.description}</p>
+                            <p className="projects-spotlight_summary">{activeProject.summary}</p>
+                            <p className="projects-spotlight_description">{activeProject.description}</p>
 
-                            <div className="projects-story_points">
+                            <div className="projects-spotlight_points">
                                 {activeProject.impact.map((point, index) => (
-                                    <div key={point} className="projects-story_point">
-                                        <span className="projects-story_pointIndex">
+                                    <div key={point} className="projects-spotlight_point">
+                                        <span className="projects-counter">
                                             {String(index + 1).padStart(2, '0')}
                                         </span>
                                         <p>{point}</p>
@@ -175,7 +182,7 @@ const Projects = () => {
                                 ))}
                             </div>
 
-                            <div className="projects-story_tags">
+                            <div className="projects-spotlight_tags">
                                 {activeProject.tags.map((tag) => (
                                     <div
                                         key={tag.id}
@@ -196,7 +203,7 @@ const Projects = () => {
                                 ))}
                             </div>
 
-                            <div className="projects-story_actions">
+                            <div className="projects-spotlight_actions">
                                 {activeProject.repoUrl ? (
                                     <a
                                         href={activeProject.repoUrl}
@@ -213,90 +220,85 @@ const Projects = () => {
                                 )}
                             </div>
 
-                            <div className="projects-story_note">
+                            <div className="projects-spotlight_note">
                                 <span className="card-label">Build Focus</span>
                                 <p>{activeProject.availabilityNote}</p>
                             </div>
                         </article>
 
-                        <article className="projects-viewer">
-                            <div className="projects-viewer_topbar">
-                                <div className="projects-viewer_identity">
-                                    <span className="projects-viewer_mark">{activeProject.mark}</span>
-                                    <div>
-                                        <span className="projects-viewer_title">{activeProject.title}</span>
-                                        <span className="projects-viewer_mode">{activeImageMode}</span>
+                        <article className="projects-showcase">
+                            <div className="projects-showcase_frame">
+                                <div className="projects-showcase_topbar">
+                                    <div className="projects-showcase_dots">
+                                        <span />
+                                        <span />
+                                        <span />
                                     </div>
-                                </div>
-
-                                <div className="projects-viewer_controls">
-                                    <span className="projects-viewer_count">
-                                        {activeImageNumber} / {totalImages}
+                                    <span className="projects-showcase_count">
+                                        {activeProjectNumber} / {totalProjects}
                                     </span>
-                                    <div className="projects-arrow_group">
-                                        <button
-                                            type="button"
-                                            className="projects-arrow_button projects-arrow_buttonSecondary"
-                                            onClick={() => moveImage(-1)}
-                                            aria-label="Show previous screenshot"
-                                        >
-                                            &larr;
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="projects-arrow_button projects-arrow_buttonSecondary"
-                                            onClick={() => moveImage(1)}
-                                            aria-label="Show next screenshot"
-                                        >
-                                            &rarr;
-                                        </button>
-                                    </div>
+                                </div>
+
+                                <div
+                                    className={`projects-showcase_viewer ${
+                                        activeImageOrientation === 'portrait'
+                                            ? 'projects-showcase_viewer_portrait'
+                                            : ''
+                                    }`}
+                                >
+                                    <div className="projects-showcase_glow" aria-hidden="true" />
+                                    <span className="projects-showcase_badge">{activeProject.mark}</span>
+                                    <img
+                                        key={activeImage.src}
+                                        src={activeImage.src}
+                                        alt={activeImage.alt}
+                                        className={`projects-showcase_image projects-showcase_image_${activeImageOrientation}`}
+                                        loading="lazy"
+                                        decoding="async"
+                                        onLoad={(event) => {
+                                            const { naturalWidth, naturalHeight } = event.currentTarget;
+                                            setActiveImageOrientation(
+                                                naturalHeight > naturalWidth ? 'portrait' : 'landscape'
+                                            );
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="projects-showcase_footer">
+                                    <p className="projects-showcase_caption">{activeImage.alt}</p>
+                                    <span className="projects-showcase_count">
+                                        {activeImageMode} · {activeImageNumber} / {totalImages}
+                                    </span>
                                 </div>
                             </div>
 
-                            <div className={`projects-stage_surface projects-stage_surface_${activeImageOrientation}`}>
-                                <div className="projects-stage_aura" aria-hidden="true" />
-                                <div className="projects-stage_auraSecondary" aria-hidden="true" />
-
-                                <div className={`projects-device projects-device_${activeImageOrientation}`}>
-                                    {activeImageOrientation === 'portrait' ? (
-                                        <div className="projects-device_portraitBar" aria-hidden="true" />
-                                    ) : (
-                                        <div className="projects-device_browserBar" aria-hidden="true">
-                                            <div className="projects-device_browserDots">
-                                                <span />
-                                                <span />
-                                                <span />
-                                            </div>
-                                            <div className="projects-device_browserSearch" />
-                                        </div>
-                                    )}
-
-                                    <div className="projects-device_screen">
-                                        <img
-                                            key={activeImage.src}
-                                            src={activeImage.src}
-                                            alt={activeImage.alt}
-                                            className="projects-device_image"
-                                            loading="lazy"
-                                            decoding="async"
-                                            onLoad={(event) => {
-                                                const { naturalWidth, naturalHeight } = event.currentTarget;
-                                                setActiveImageOrientation(
-                                                    naturalHeight > naturalWidth ? 'portrait' : 'landscape'
-                                                );
-                                            }}
-                                        />
-                                    </div>
+                            <div className="projects-rail_controls">
+                                <span className="projects-counter">Screenshots</span>
+                                <div className="projects-arrow_group">
+                                    <button
+                                        type="button"
+                                        className="projects-arrow_button projects-arrow_buttonSecondary"
+                                        onClick={() => moveImage(-1)}
+                                        aria-label="Show previous screenshot"
+                                    >
+                                        &larr;
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="projects-arrow_button projects-arrow_buttonSecondary"
+                                        onClick={() => moveImage(1)}
+                                        aria-label="Show next screenshot"
+                                    >
+                                        &rarr;
+                                    </button>
                                 </div>
                             </div>
 
-                            <div className="projects-viewer_captionRow">
-                                <p className="projects-showcase_caption">{activeImage.alt}</p>
-                                <span className="projects-command_count">{activeImageMode}</span>
-                            </div>
-
-                            <div className="projects-filmstrip" aria-label={`${activeProject.title} screenshots`}>
+                            <div
+                                className="projects-thumbs"
+                                aria-label={`${activeProject.title} screenshots`}
+                                ref={thumbnailListRef}
+                            >
                                 {activeImages.map((image, index) => (
                                     <button
                                         key={image.id}
