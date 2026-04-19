@@ -12,9 +12,8 @@ const Experience = () => {
         threshold: 0.16,
         rootMargin: '220px 0px',
     });
-    const { isMobile, canRenderHeavyScene } = useAdaptiveFlags();
-
-    const shouldRenderScene = canRenderHeavyScene && hasBeenVisible;
+    const { isMobile } = useAdaptiveFlags();
+    const shouldRenderScene = hasBeenVisible;
 
     return (
         <section ref={elementRef} className="section-wrap" id="experience">
@@ -58,7 +57,7 @@ const Experience = () => {
                                     decoding="async"
                                 />
                                 <p className="canvas-placeholder_text">
-                                    Animated preview loads on devices that can handle it smoothly.
+                                    Scroll to this section to load the animated preview.
                                 </p>
                             </div>
                         )}
