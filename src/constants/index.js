@@ -19,10 +19,10 @@ export const personalInfo = {
 
 export const navLinks = [
     { id: 1, name: 'Home', href: '#home' },
-    { id: 2, name: 'About', href: '#about' },
-    { id: 3, name: 'Skills', href: '#skills' },
-    { id: 4, name: 'Projects', href: '#projects' },
-    { id: 5, name: 'Experience', href: '#experience' },
+    { id: 2, name: 'Experience', href: '#experience' },
+    { id: 3, name: 'About', href: '#about' },
+    { id: 4, name: 'Skills', href: '#skills' },
+    { id: 5, name: 'Projects', href: '#projects' },
     { id: 6, name: 'Recommendations', href: '#recommendations' },
     { id: 7, name: 'Contact', href: '#contact' },
 ];
