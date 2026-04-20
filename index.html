@@ -10,12 +10,21 @@
         try {
           const storageKey = 'portfolio-theme';
           const storedTheme = window.localStorage.getItem(storageKey);
+
+          // Dev-only: when running on localhost, clear an existing 'dark' preference
+          // so the app boots in light mode for development/testing.
+          if (
+            storedTheme === 'dark' &&
+            (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+          ) {
+            window.localStorage.removeItem(storageKey);
+          }
+
+          const storedAfterRemoval = window.localStorage.getItem(storageKey);
           const resolvedTheme =
-            storedTheme === 'light' || storedTheme === 'dark'
-              ? storedTheme
-              : window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light';
+            storedAfterRemoval === 'light' || storedAfterRemoval === 'dark'
+              ? storedAfterRemoval
+              : 'light';
 
           const root = document.documentElement;
           root.dataset.theme = resolvedTheme;
@@ -28,7 +37,14 @@
               resolvedTheme === 'dark' ? '#0d1117' : '#f8f4ec',
             );
           }
+
+          // Helpful debug log during development
+          if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            // eslint-disable-next-line no-console
+            console.log('Theme bootstrap resolved:', resolvedTheme, 'stored:', storedAfterRemoval);
+          }
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Theme bootstrap failed:', error);
         }
       })();

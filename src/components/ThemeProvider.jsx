@@ -36,7 +36,10 @@ export const ThemeProvider = ({ children }) => {
         if (typeof document === 'undefined') return 'light';
         return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
     });
-    const [themePreference, setThemePreference] = useState(() => getStoredTheme());
+    const [themePreference, setThemePreference] = useState(() => {
+        const stored = getStoredTheme();
+        return stored || 'light'; // Default to 'light' mode on first visit
+    });
 
     useEffect(() => {
         if (typeof window === 'undefined') return undefined;
@@ -44,7 +47,7 @@ export const ThemeProvider = ({ children }) => {
         const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const syncTheme = () => {
             const storedTheme = getStoredTheme();
-            const resolvedTheme = storedTheme || getSystemTheme(mediaQuery);
+            const resolvedTheme = storedTheme || 'light'; // Default to light mode instead of system preference
 
             setThemePreference(storedTheme);
             setTheme(resolvedTheme);
@@ -59,10 +62,10 @@ export const ThemeProvider = ({ children }) => {
 
         const handleMediaChange = () => {
             if (!getStoredTheme()) {
-                const nextTheme = getSystemTheme(mediaQuery);
+                // Always use light mode as default instead of system preference
                 setThemePreference(null);
-                setTheme(nextTheme);
-                applyTheme(nextTheme);
+                setTheme('light');
+                applyTheme('light');
             }
         };
 
@@ -101,7 +104,7 @@ export const ThemeProvider = ({ children }) => {
             }
         }
 
-        const resolvedTheme = nextTheme || getSystemTheme();
+        const resolvedTheme = nextTheme || 'light';
         setThemePreference(nextTheme);
         setTheme(resolvedTheme);
         applyTheme(resolvedTheme);
