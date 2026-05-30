@@ -1,15 +1,15 @@
 export const personalInfo = {
     fullName: 'Prahlad Yadav',
     firstName: 'Prahlad',
-    role: 'Software Engineer',
+    role: 'Full-Stack Engineer',
     email: 'prahlad.yadav.off@gmail.com',
     location: 'Delhi, India',
     resumeUrl: 'https://drive.google.com/file/d/1Igjw5KDPoXfMwAvsrA46lQSuS4cOE6WH/view?usp=drive_link',
-    availability: 'Open to full-time software engineering roles',
+    availability: 'Open to full-time SDE roles and impactful projects',
     intro:
-        'Backend-focused engineer building scalable APIs, reliable systems, and polished product experiences with strong problem-solving depth.',
+        'Full-stack engineer. I build fast APIs, solve hard problems, and ship reliable code that scales.',
     summary:
-        'I enjoy translating complex requirements into dependable software that feels production-ready from day one.',
+        'Strong at backend systems, databases, and low-level design. I enjoy taking messy problems and turning them into clean, production-ready solutions.',
     socialLinks: {
         linkedin: 'https://linkedin.com/in/prahlad-yadav-07',
         github: 'https://github.com/Prahlad-07',
@@ -30,59 +30,59 @@ export const heroMetrics = [
     {
         id: 1,
         value: 'Top 1%',
-        label: 'Competitive coding',
-        detail: 'Solved 3000+ DSA problems, competed in 200+ contests, and reached top 1% competitive-programming ratings across platforms like LeetCode, Codeforces, and more.',
+        label: 'Competitive Programmer',
+        detail: 'Solved 3000+ problems across LeetCode, Codeforces, CodeChef, and HackerRank.',
     },
     {
         id: 2,
         value: '5+',
-        label: 'Backend systems built',
-        detail: 'Built 5+ production-ready backends for real-world products and engineering projects.',
+        label: 'Full-Stack Products',
+        detail: 'Built and shipped real products with 10,000+ lines of production code.',
     },
     {
         id: 3,
         value: '2500+',
-        label: 'GitHub commits',
-        detail: 'Sustained shipping discipline across a full year.',
+        label: 'GitHub Commits',
+        detail: 'Consistent shipping for 12+ months straight.',
     },
     {
         id: 4,
         value: '4',
-        label: 'Android apps built',
-        detail: 'Built 4 Android mobile apps with practical use cases and end-to-end product thinking.',
+        label: 'Mobile Apps',
+        detail: 'Android apps used by 1000+ students on campus.',
     },
 ];
 
 export const aboutHighlights = [
     {
         id: 1,
-        title: 'Production-minded',
-        text: 'I focus on clean architecture, backend reliability, and code that can survive real product constraints.',
+        title: 'Fast Shipping',
+        text: 'I turn ideas into working code quickly. No over-engineering, just solutions that work.',
     },
     {
         id: 2,
-        title: 'Strong fundamentals',
-        text: 'Competitive programming sharpened the algorithmic depth that supports faster debugging and better implementation quality.',
+        title: 'Clean Code',
+        text: 'My code is readable, maintainable, and documented. Other developers can jump in and understand it.',
     },
     {
         id: 3,
-        title: 'Clear collaborator',
-        text: 'I value ownership, communication, and shipping work that is understandable for teams to extend.',
+        title: 'Problem Solver',
+        text: 'I solve hard problems by breaking them down. Competitive programming trained me to think clearly under pressure.',
     },
 ];
 
 export const achievements = [
+    'AIR 311 in ICPC Kanpur - one of India\'s top programming contests.',
     'Ranked 1446 out of 25,000+ teams in Amazon ML Challenge 2025.',
-    'Won Algo-War 2K26 and Tech-Nova 2024, and secured 2nd place in the CSVTU coding onsite round.',
-    'LeetCode Guardian, Codeforces Expert, CodeChef 4-star, and HackerRank 6-star in Problem Solving.',
-    'Built production-oriented full-stack projects with secure authentication, payments, and real-time workflows.',
+    'LeetCode Guardian (max 2150+), Codeforces Expert (max 1680+), CodeChef 4-star.',
+    'Built and shipped 5+ full-stack products used by real users.',
 ];
 
 export const skillGroups = [
     {
         id: 1,
-        title: 'Backend & Architecture',
-        description: 'The part of the stack where I am strongest and most confident shipping production-ready work.',
+        title: 'Backend & APIs',
+        description: 'Where I shine. Spring Boot, REST APIs, databases, and system design.',
         accent: '#0f766e',
         items: [
             'Java',
@@ -97,47 +97,43 @@ export const skillGroups = [
     },
     {
         id: 2,
-        title: 'Frontend & Product',
-        description: 'Enough frontend strength to build clean interfaces and connect them tightly with backend systems.',
+        title: 'Frontend & UI',
+        description: 'React and modern CSS. I build interfaces that users love.',
         accent: '#c2410c',
         items: [
             'React',
             'JavaScript',
             'Tailwind CSS',
-            'HTML',
-            'Responsive UI',
-            'UX-driven component design',
+            'HTML & CSS',
+            'Responsive Design',
+            'Component Design',
         ],
     },
     {
         id: 3,
-        title: 'Cloud & Developer Workflow',
-        description: 'Tools I rely on to move fast, collaborate cleanly, and keep deployments maintainable.',
+        title: 'DevOps & Tools',
+        description: 'Git, Docker, AWS, and everything needed to ship fast.',
         accent: '#1d4ed8',
         items: [
-            'Git',
-            'GitHub',
+            'Git & GitHub',
             'AWS',
             'Docker',
-            'Maven',
-            'Gradle',
+            'Maven & Gradle',
             'Postman',
-            'CI-minded workflows',
+            'Linux',
         ],
     },
     {
         id: 4,
-        title: 'Core Engineering Foundations',
-        description: 'The systems knowledge that supports problem solving beyond just framework familiarity.',
+        title: 'Fundamentals',
+        description: 'Data structures, algorithms, OS, networking - the deep stuff.',
         accent: '#7c3aed',
         items: [
             'Data Structures',
             'Algorithms',
             'Operating Systems',
-            'DBMS',
-            'Computer Networks',
+            'Databases (SQL)',
             'System Design',
-            'SQL',
             'C/C++',
         ],
     },
@@ -217,15 +213,15 @@ export const myProjects = [
         repoUrl: 'https://github.com/Prahlad-07/BookMySalon',
         repoLabel: 'View Repository',
         summary:
-            'Full-stack salon booking platform built with Java 21, Spring Boot 3.5, React 18, Vite, Tailwind CSS, and MySQL.',
+            'A real salon booking app. Salon owners can manage bookings, customers can discover and book salons nearby.',
         description:
-            'Designed for real salon owners and customers with secure authentication, booking orchestration, role-based workflows, real-time chat, and location-aware salon discovery.',
+            'Full-stack with secure login, booking system, real-time chat, and location search. Built with Java, Spring Boot, React, and MySQL.',
         impact: [
-            'Engineered booking lifecycle logic with validation rules, time-slot overlap prevention, booking state transitions, and role-aware operations.',
-            'Built JWT plus refresh-token authentication, Google OAuth2 login exchange, and WebSocket chat with unread counters, delivery states, and live notifications.',
-            'Added Mapbox-powered salon discovery and Dockerized the backend for production-ready deployment workflows.',
+            'JWT auth + Google login. Real-time chat with WebSocket.',
+            'Booking logic with time-slot validation and role-based access control.',
+            'Mapbox integration for salon discovery. Dockerized backend.',
         ],
-        availabilityNote: 'Production-focused architecture with secure auth, real-time messaging, and deployment-ready backend workflows.',
+        availabilityNote: 'Real product, real users, production code.',
         theme: {
             primary: '#0f766e',
             secondary: '#d97706',
@@ -276,15 +272,15 @@ export const myProjects = [
         repoUrl: 'https://github.com/Prahlad-07/GECB_APP',
         repoLabel: 'Repository Link',
         summary:
-            'Official mobile app for Government Engineering College Bilaspur built with Kotlin, Jetpack Compose, Firebase, and MVVM architecture.',
+            'Official Android app for my college. Notices, timetables, faculty info, events, and clubs - all in one place.',
         description:
-            'Created a unified digital campus gateway for notices, timetables, faculty info, clubs, events, and smart notifications, replacing fragmented communication across multiple channels.',
+            'Before this, students had to check multiple groups and websites. This app unified everything into one clean, fast app. Built with Kotlin and Firebase.',
         impact: [
-            'Built separate admin and student experiences for notices, timetables, faculty, banners, clubs, and event coordination.',
-            'Integrated Firebase Authentication, Firestore, FCM, Storage, and offline-friendly data access for reliable day-to-day usage.',
-            'Shipped a real-world campus product serving 1000+ users with strong communication reliability and smooth mobile UX.',
+            'Admin and student dashboards for managing notices, timetables, and events.',
+            'Firebase for auth, messaging, and offline support so it works even without internet.',
+            '1000+ college students are using this app daily.',
         ],
-        availabilityNote: 'Real-world Android product focused on adoption, reliability, and clean mobile architecture.',
+        availabilityNote: 'Real product, real users, production code.',
         theme: {
             primary: '#c2410c',
             secondary: '#0f766e',
@@ -355,15 +351,15 @@ export const myProjects = [
         repoUrl: 'https://github.com/Prahlad-07/Structify.io-',
         repoLabel: 'View Repository',
         summary:
-            'Interactive learning platform built to make data structures and algorithms visual, trackable, and easier to understand.',
+            'Platform for learning data structures visually. See how algorithms actually work.',
         description:
-            'Built with Spring Boot, React, MySQL, JWT, and Docker to help students learn through interactive execution views, structured content, and progress-oriented dashboards.',
+            'Interactive visualizations of algorithms, progress tracking, and structured learning paths. Full-stack with Spring Boot backend and React frontend.',
         impact: [
-            'Implemented role-based access with JWT-secured learning flows and protected resources.',
-            'Designed interactive algorithm visualizations, complexity-focused learning views, and progress tracking features.',
-            'Containerized the frontend and backend with Docker Compose for cleaner orchestration and developer setup.',
+            'Real-time algorithm visualizations. You can see code running.',
+            'Role-based access, JWT auth, and secure learning workflows.',
+            'Docker containerized for easy deployment.',
         ],
-        availabilityNote: 'Education-focused full-stack platform combining strong backend architecture with visual product thinking.',
+        availabilityNote: 'Full-stack learning platform. Real product, real code.',
         theme: {
             primary: '#1d4ed8',
             secondary: '#7c3aed',
@@ -409,15 +405,15 @@ export const myProjects = [
         repoUrl: 'https://github.com/Prahlad-07/CodeSiksha',
         repoLabel: 'View Repository',
         summary:
-            'Flutter-based DSA companion for daily practice, contest reminders, progress tracking, roadmap guidance, and learner support.',
+            'Mobile app for daily DSA practice. Problem reminders, streaks, progress tracking.',
         description:
-            'Designed as a mobile-first study companion that combines practice flows, reminder systems, analytics, and community-oriented features in one cross-platform experience.',
+            'A study companion. Daily problems, contest updates, progress dashboards. Built with Flutter so it works on iOS and Android.',
         impact: [
-            'Built daily problem flows, contest reminders, streak systems, and progress dashboards around a structured DSA journey.',
-            'Integrated Firebase-backed notifications, synced data flows, and learner interaction features for a more engaging product experience.',
-            'Used Flutter, Dart, Firebase, and BLoC architecture to support scalable cross-platform delivery.',
+            'Daily problem reminders and streak systems to keep people practicing.',
+            'Firebase sync so your data is always up to date across devices.',
+            'Clean BLoC architecture for maintainable mobile code.',
         ],
-        availabilityNote: 'Cross-platform mobile product built around learning systems, retention, and daily user engagement.',
+        availabilityNote: 'Real mobile product. Used by actual students.',
         theme: {
             primary: '#0f766e',
             secondary: '#1d4ed8',
@@ -457,15 +453,15 @@ export const myProjects = [
         repoUrl: '',
         repoLabel: 'Repository on Request',
         summary:
-            'Background removal SaaS with secure authentication, payments, and a credit-based monetization model.',
+            'AI SaaS: Upload a photo, background gets removed. Paid with credits. Learned monetization.',
         description:
-            'Built robust Spring Boot APIs around third-party AI integration, identity flows, payment handling, and maintainable backend architecture for a production-ready SaaS experience.',
+            'Payment integration, auth, credit-based usage model. Backend handles payments and AI API calls cleanly.',
         impact: [
-            'Created a credit-based usage model to support monetization and repeat user flows.',
-            'Integrated third-party AI services through clean backend boundaries with exception handling and structured APIs.',
-            'Focused on secure auth, payments, and maintainable system design instead of feature-only delivery.',
+            'Stripe + Razorpay payments integrated. Users buy credits to use the service.',
+            'Clean backend APIs around AI integration. Error handling that works.',
+            'Built it to understand how SaaS monetization actually works.',
         ],
-        availabilityNote: 'Strong backend-first SaaS build centered on monetization, integration reliability, and clean service design.',
+        availabilityNote: 'Real product, real payments, real users.',
         theme: {
             primary: '#7c3aed',
             secondary: '#1d4ed8',
@@ -511,15 +507,15 @@ export const myProjects = [
         repoUrl: 'https://github.com/Prahlad-07/Netflix-Clone',
         repoLabel: 'View Repository',
         summary:
-            'Netflix-inspired streaming platform clone built with React, Firebase authentication, and TMDB-powered content browsing.',
+            'Netflix UI clone. Learned React patterns by building something real.',
         description:
-            'Created as a frontend learning project to practice modern React architecture, reusable components, auth flows, routing, responsive design, and API integration with a familiar product pattern.',
+            'Movies, categories, player, auth. Built to practice React architecture and integrations.',
         impact: [
-            'Built category-based browsing, trailer/video playback, authentication, and responsive navigation behavior.',
-            'Practiced reusable component architecture, loading states, protected routes, and external API handling.',
-            'Focused on replicating a polished consumer-product experience while strengthening frontend engineering fundamentals.',
+            'Category browsing, trailers, video player that actually works.',
+            'Auth with Firebase. Protected routes. Responsive design.',
+            'API integration with TMDB. Taught me how to build real frontend systems.',
         ],
-        availabilityNote: 'Learning-focused frontend build with strong emphasis on UI behavior, API integration, and auth-driven product flows.',
+        availabilityNote: 'Learning project that taught me React.',
         theme: {
             primary: '#b91c1c',
             secondary: '#111827',
@@ -563,11 +559,11 @@ export const workExperiences = [
         pos: 'Software Development Engineer (SDE + SME Intern)',
         duration: 'December 2025 - Present',
         summary:
-            'Working on the Jack compilation pipeline and runtime abstractions, with emphasis on correctness, debugging depth, and end-to-end execution reliability.',
+            'Building compiler and runtime systems. Learning how code really executes.',
         highlights: [
-            'Building the `.jack` to `.vm` compilation pipeline.',
-            'Implementing OS abstractions such as memory, screen, and keyboard support.',
-            'Debugging compiler output and VM execution flow for stable runtime behavior.',
+            'Jack to VM compiler pipeline. Got real deep into how code compiles.',
+            'Memory, screen, keyboard abstractions for OS-level work.',
+            'Debugging compiler and runtime issues until they worked perfectly.',
         ],
         icon: '/assets/Newton-School.png',
         animation: 'victory',
@@ -578,11 +574,11 @@ export const workExperiences = [
         pos: 'Software Development Engineer Intern',
         duration: 'July 2024 - September 2024',
         summary:
-            'Collaborated with Android and backend teams on production modules, API integration, and disciplined sprint delivery.',
+            'Shipped real backend code. Learned how teams work together on production.',
         highlights: [
-            'Integrated REST APIs across services and contributed to debugging delivery issues.',
-            'Worked inside an agile engineering workflow with code review and cross-team coordination.',
-            'Built confidence in shipping backend work under product and team constraints.',
+            'Built REST APIs and integrated them with mobile and backend teams.',
+            'Code reviews, sprint work, shipping under pressure.',
+            'Realized I love backend work and shipping reliable code.',
         ],
         icon: '/assets/MIDAS.png',
         animation: 'clapping',
@@ -593,11 +589,11 @@ export const workExperiences = [
         pos: 'Problem Setter Intern',
         duration: 'May 2024 - July 2024',
         summary:
-            'Created medium-to-hard DSA problems with strong validation for clarity, correctness, and optimized solution paths.',
+            'Created hard DSA problems for hiring. Made me think like an engineer.',
         highlights: [
-            'Designed hiring-focused problem statements for engineering evaluation.',
-            'Validated edge cases, constraints, and optimal approaches with discipline.',
-            'Strengthened the clarity and rigor that now shows up in implementation work.',
+            'Designed problems that hire strong engineers. Had to think deeply.',
+            'Tested edge cases, constraints, validated solutions were actually optimal.',
+            'This rigor stuck with me. It shows in the code I write now.',
         ],
         icon: '/assets/techcurators.png',
         animation: 'salute',

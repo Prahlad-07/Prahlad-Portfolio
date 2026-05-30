@@ -17,7 +17,7 @@ const Hero = () => {
                         <span>{personalInfo.role}</span>
                     </p>
                     <h1 className="hero-display">
-                        Building <em>reliable</em> software with backend depth and product-level polish.
+                        I build <em>fast</em> backends. I solve <em>hard</em> problems. I ship <em>clean</em> code.
                     </h1>
                     <p className="hero-body">
                         {personalInfo.intro} {personalInfo.summary}
@@ -59,7 +59,7 @@ const Hero = () => {
 
                 <div className="hero-visual">
                     <article className="premium-card hero-portrait_card">
-                        <span className="hero-status_badge">Open to SDE roles</span>
+                        <span className="hero-status_badge">Actively hiring</span>
                         <div className="hero-portrait_glow" aria-hidden="true" />
                         <div className="hero-portrait_frame">
                             <img
@@ -71,8 +71,8 @@ const Hero = () => {
                             />
                         </div>
                         <div className="hero-note_card">
-                            <span className="card-label">Current focus</span>
-                            <p>I&apos;m learning how to be the best human being I can be.</p>
+                            <span className="card-label">Right now</span>
+                            <p>Building systems at Newton School. Looking for my next challenge.</p>
                         </div>
                     </article>
 

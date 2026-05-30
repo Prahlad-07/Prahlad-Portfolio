@@ -182,20 +182,20 @@ const Projects = () => {
 
                             <div className="projects-story_actions">
                                 {activeProject.repoUrl ? (
-
+                                    <a
                                         href={activeProject.repoUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="button-primary"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="button-primary"
                                     >
-                                {activeProject.repoLabel}
+                                        {activeProject.repoLabel}
                                     </a>
-                                    ) : (
+                                ) : (
                                     <span className="button-secondary project-stage_buttonMuted">
-                                {activeProject.repoLabel}
-                            </span>
-                            )}
-                    </div>
+                                        {activeProject.repoLabel}
+                                    </span>
+                                )}
+                            </div>
 
                     <div className="projects-story_note">
                         <span className="card-label">Build Focus</span>

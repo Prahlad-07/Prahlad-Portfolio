@@ -11,13 +11,6 @@ const getStoredTheme = () => {
     return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null;
 };
 
-const getSystemTheme = (mediaQuery) => {
-    if (mediaQuery) return mediaQuery.matches ? 'dark' : 'light';
-    if (typeof window === 'undefined') return 'light';
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-};
-
 const applyTheme = (theme) => {
     if (typeof document === 'undefined') return;
 
@@ -129,3 +122,5 @@ ThemeProvider.propTypes = {
 };
 
 export default ThemeProvider;
+
+
