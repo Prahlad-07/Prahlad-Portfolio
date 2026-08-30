@@ -12,24 +12,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined;
-
-          if (
-            id.includes('@react-three/fiber') ||
-            id.includes('@react-three/drei') ||
-            id.includes('three/') ||
-            id.includes('three-stdlib')
-          ) {
-            return 'vendor-three';
-          }
-
-          if (id.includes('gsap')) {
-            return 'vendor-gsap';
-          }
-
-          if (id.includes('@emailjs/browser')) {
-            return 'vendor-emailjs';
-          }
-
+          if (id.includes('@emailjs/browser')) return 'vendor-emailjs';
           return undefined;
         },
       },

@@ -1,11 +1,10 @@
-// Lightweight syntax highlighting for the IDE-style portfolio.
-// Each function returns Line[]  where  Line = Token[]  and  Token = { t, v }.
+// Lightweight syntax highlighting. Returns Line[] where Line = Token[] and Token = { t, v }.
 
 const KEYWORD = new Set([
     'const', 'let', 'var', 'function', 'class', 'new', 'typeof', 'instanceof',
     'extends', 'implements', 'static', 'get', 'set', 'super', 'void', 'this',
     'type', 'interface', 'enum', 'as', 'readonly', 'public', 'private',
-    'protected', 'declare', 'namespace', 'keyof', 'satisfies',
+    'protected', 'declare', 'namespace', 'keyof',
 ]);
 const CONTROL = new Set([
     'import', 'from', 'export', 'default', 'return', 'if', 'else', 'for',
@@ -13,123 +12,95 @@ const CONTROL = new Set([
     'yield', 'in', 'of', 'try', 'catch', 'finally', 'throw',
 ]);
 const CONSTS = new Set(['true', 'false', 'null', 'undefined', 'NaN', 'Infinity']);
-const PRIMITIVE_TYPES = new Set(['string', 'number', 'boolean', 'any', 'unknown', 'never', 'object', 'symbol', 'bigint']);
+const PRIMS = new Set(['string', 'number', 'boolean', 'any', 'unknown', 'never', 'object', 'symbol', 'Promise', 'Array']);
 
-const TOKEN_RE = new RegExp(
+const RE = new RegExp(
     [
-        '(\\/\\/[^\\n]*)',                       // 1 line comment
-        '(`(?:\\\\.|[^`\\\\])*`)',               // 2 template string
-        '("(?:\\\\.|[^"\\\\])*")',               // 3 double string
-        "('(?:\\\\.|[^'\\\\])*')",               // 4 single string
-        '(\\b\\d[\\d_]*(?:\\.\\d+)?(?:e[+-]?\\d+)?\\b)', // 5 number
-        '([A-Za-z_$][\\w$]*)',                   // 6 identifier
-        '(\\s+)',                                // 7 whitespace
-        '([^\\s\\w])',                           // 8 punctuation (single char)
+        '(\\/\\*[\\s\\S]*?\\*\\/|\\/\\/[^\\n]*)',
+        '(`(?:\\\\.|[^`\\\\])*`)',
+        '("(?:\\\\.|[^"\\\\])*")',
+        "('(?:\\\\.|[^'\\\\])*')",
+        '(\\b\\d[\\d_]*(?:\\.\\d+)?\\b)',
+        '([A-Za-z_$][\\w$]*)',
+        '(\\s+)',
+        '([^\\s\\w])',
     ].join('|'),
     'g',
 );
 
-function tokenizeCodeLine(line) {
-    const tokens = [];
-    let m;
-    TOKEN_RE.lastIndex = 0;
-    let prevMeaningful = '';
-
+function tokenizeLine(line) {
     const raw = [];
-    while ((m = TOKEN_RE.exec(line)) !== null) raw.push(m);
+    let m;
+    RE.lastIndex = 0;
+    while ((m = RE.exec(line)) !== null) raw.push(m);
 
+    const out = [];
+    let prev = '';
     for (let i = 0; i < raw.length; i += 1) {
-        const m2 = raw[i];
-        const [, comment, tmpl, dq, sq, num, ident, ws, punct] = m2;
+        const [, comment, tmpl, dq, sq, num, ident, ws, punct] = raw[i];
 
-        if (comment !== undefined) {
-            tokens.push({ t: 'comment', v: comment });
-            continue;
-        }
+        if (comment !== undefined) { out.push({ t: 'comment', v: comment }); continue; }
         if (tmpl !== undefined || dq !== undefined || sq !== undefined) {
             const v = tmpl ?? dq ?? sq;
-            // string used as an object key?  ("foo":)
             let j = i + 1;
             while (raw[j] && raw[j][7] !== undefined) j += 1;
-            const isKey = raw[j] && raw[j][8] === ':';
-            tokens.push({ t: isKey ? 'prop' : 'string', v });
+            out.push({ t: raw[j] && raw[j][8] === ':' ? 'prop' : 'string', v });
             continue;
         }
-        if (num !== undefined) {
-            tokens.push({ t: 'number', v: num });
-            continue;
-        }
-        if (ws !== undefined) {
-            tokens.push({ t: 'plain', v: ws });
-            continue;
-        }
+        if (num !== undefined) { out.push({ t: 'number', v: num }); continue; }
+        if (ws !== undefined) { out.push({ t: 'plain', v: ws }); continue; }
         if (punct !== undefined) {
-            tokens.push({ t: 'punct', v: punct });
-            if (punct.trim()) prevMeaningful = punct;
+            out.push({ t: 'punct', v: punct });
+            if (punct.trim()) prev = punct;
             continue;
         }
-        if (ident !== undefined) {
-            // look ahead for next meaningful char
-            let j = i + 1;
-            while (raw[j] && raw[j][7] !== undefined) j += 1;
-            const nextPunct = raw[j] ? raw[j][8] : '';
-
-            let t = 'plain';
-            if (KEYWORD.has(ident)) t = 'keyword';
-            else if (CONTROL.has(ident)) t = 'control';
-            else if (CONSTS.has(ident)) t = 'const';
-            else if (prevMeaningful === '.') t = 'prop';
-            else if (nextPunct === '(') t = 'fn';
-            else if (nextPunct === ':') t = 'prop';
-            else if (PRIMITIVE_TYPES.has(ident)) t = 'keyword';
-            else if (/^[A-Z]/.test(ident)) t = 'type';
-
-            tokens.push({ t, v: ident });
-            prevMeaningful = ident;
-            continue;
-        }
+        // identifier
+        let j = i + 1;
+        while (raw[j] && raw[j][7] !== undefined) j += 1;
+        const next = raw[j] ? raw[j][8] : '';
+        let t = 'plain';
+        if (KEYWORD.has(ident) || PRIMS.has(ident)) t = 'keyword';
+        else if (CONTROL.has(ident)) t = 'control';
+        else if (CONSTS.has(ident)) t = 'const';
+        else if (prev === '.') t = 'prop';
+        else if (next === '(') t = 'fn';
+        else if (next === ':') t = 'prop';
+        else if (/^[A-Z]/.test(ident)) t = 'type';
+        out.push({ t, v: ident });
+        prev = ident;
     }
-    return tokens;
+    return out.length ? out : [{ t: 'plain', v: '' }];
 }
 
 export function highlightCode(source) {
-    return source.replace(/\t/g, '  ').split('\n').map((line) => {
-        if (line.trim() === '') return [{ t: 'plain', v: '' }];
-        return tokenizeCodeLine(line);
-    });
+    // handle block comments spanning lines by pre-splitting
+    return String(source).replace(/\t/g, '  ').split('\n').map((l) => (l === '' ? [{ t: 'plain', v: '' }] : tokenizeLine(l)));
 }
 
-// Pretty JSON that keeps short primitive arrays on a single line (VS Code-ish).
+// Pretty JSON that keeps short primitive arrays on one line.
 export function formatJSON(value, indent = 0) {
     const pad = '  '.repeat(indent);
     const padIn = '  '.repeat(indent + 1);
-
     if (value === null || typeof value !== 'object') return JSON.stringify(value);
 
     if (Array.isArray(value)) {
         if (value.length === 0) return '[]';
-        const allPrimitive = value.every((v) => v === null || typeof v !== 'object');
-        if (allPrimitive) {
-            const inline = `[ ${value.map((v) => JSON.stringify(v)).join(', ')} ]`;
-            if (inline.length + pad.length <= 118) return inline;
+        if (value.every((v) => v === null || typeof v !== 'object')) {
+            const inline = `[${value.map((v) => JSON.stringify(v)).join(', ')}]`;
+            if (inline.length + pad.length <= 120) return inline;
         }
-        const items = value.map((v) => padIn + formatJSON(v, indent + 1));
-        return `[\n${items.join(',\n')}\n${pad}]`;
+        return `[\n${value.map((v) => padIn + formatJSON(v, indent + 1)).join(',\n')}\n${pad}]`;
     }
-
     const keys = Object.keys(value);
     if (keys.length === 0) return '{}';
-    const items = keys.map((k) => `${padIn}${JSON.stringify(k)}: ${formatJSON(value[k], indent + 1)}`);
-    return `{\n${items.join(',\n')}\n${pad}}`;
+    return `{\n${keys.map((k) => `${padIn}${JSON.stringify(k)}: ${formatJSON(value[k], indent + 1)}`).join(',\n')}\n${pad}}`;
 }
 
 export function highlightJSON(value) {
     return highlightCode(formatJSON(value));
 }
 
-// ---- Markdown ----------------------------------------------------------------
-
-function inlineMarkdown(text) {
+function inlineMD(text) {
     const tokens = [];
     const re = /(\*\*[^*]+\*\*)|(`[^`]+`)|(\[[^\]]+\]\([^)]+\))|(_[^_]+_)/g;
     let last = 0;
@@ -147,18 +118,19 @@ function inlineMarkdown(text) {
 }
 
 export function highlightMarkdown(source) {
-    return source.split('\n').map((line) => {
-        if (line.trim() === '') return [{ t: 'plain', v: '' }];
+    return String(source).split('\n').map((line) => {
+        if (line === '') return [{ t: 'plain', v: '' }];
         if (/^#{1,6}\s/.test(line)) return [{ t: 'heading', v: line }];
         if (/^>\s?/.test(line)) return [{ t: 'mdquote', v: line }];
-        const bullet = line.match(/^(\s*)([-*]|\d+\.)\s+(.*)$/);
-        if (bullet) {
-            return [
-                { t: 'plain', v: bullet[1] },
-                { t: 'punct', v: `${bullet[2]} ` },
-                ...inlineMarkdown(bullet[3]),
-            ];
-        }
-        return inlineMarkdown(line);
+        if (/^\/\//.test(line)) return [{ t: 'comment', v: line }];
+        const b = line.match(/^(\s*)([-*]|\d+\.)\s+(.*)$/);
+        if (b) return [{ t: 'plain', v: b[1] }, { t: 'punct', v: `${b[2]} ` }, ...inlineMD(b[3])];
+        return inlineMD(line);
     });
+}
+
+export function highlight(source, lang) {
+    if (lang === 'md') return highlightMarkdown(source);
+    if (lang === 'json') return typeof source === 'string' ? highlightCode(source) : highlightJSON(source);
+    return highlightCode(source);
 }
