@@ -33,8 +33,6 @@ const Projects = () => {
     const totalProjects = String(myProjects.length).padStart(2, '0');
     const activeImageNumber = String(activeImageIndex + 1).padStart(2, '0');
     const totalImages = String(activeImages.length).padStart(2, '0');
-    const activeImageMode =
-        activeImageOrientation === 'portrait' ? 'Mobile experience' : 'Web experience';
 
     useEffect(() => {
         setActiveImageIndex(0);
@@ -68,20 +66,13 @@ const Projects = () => {
         });
     };
 
-    const moveImage = (direction) => {
-        setActiveImageIndex((previousIndex) => {
-            const nextIndex = (previousIndex + direction + activeImages.length) % activeImages.length;
-            return nextIndex;
-        });
-    };
-
     return (
         <section className="section-wrap" id="projects">
             <div className="shell">
                 <SectionHeader
                     eyebrow="Projects"
-                    title="Projects presented like product-grade case studies, not just cards in a list."
-                    description="This showcase is designed to help recruiters understand the product, the engineering depth, and the visual quality fast. Desktop screenshots and mobile screenshots now adapt to different frames so the section feels polished instead of cropped."
+                    title="Real products, built end to end."
+                    description="Pick one from the list to see the story and the screens."
                 />
 
                 <section
@@ -93,14 +84,6 @@ const Projects = () => {
                 >
                     <div className="projects-rail">
                         <div className="projects-rail_top">
-                            <span className="card-label">Project Showcase</span>
-                            <p className="projects-rail_note">
-                                A tighter, more premium way to scan everything I have built. Pick a project
-                                from the deck, then explore its story and screenshots in one focused stage.
-                            </p>
-                        </div>
-
-                        <div className="projects-rail_controls">
                             <span className="projects-counter">
                                 {activeProjectNumber} / {totalProjects}
                             </span>
@@ -145,10 +128,7 @@ const Projects = () => {
                                     <span className="projects-rail_mark">{project.mark}</span>
                                     <span className="projects-rail_copy">
                                         <strong>{project.title}</strong>
-                                        <small>
-                                            {project.category} ·{' '}
-                                            {String(project.images.length).padStart(2, '0')} shots
-                                        </small>
+                                        <small>{project.category}</small>
                                     </span>
                                 </button>
                             ))}
@@ -163,43 +143,34 @@ const Projects = () => {
                                 <span>{activeProject.repoState}</span>
                             </div>
 
-                            <div className="projects-spotlight_titleWrap">
-                                <span className="projects-spotlight_watermark">{activeProject.mark}</span>
-                                <h3>{activeProject.title}</h3>
-                            </div>
-
+                            <h3 className="projects-spotlight_title">{activeProject.title}</h3>
                             <p className="projects-spotlight_summary">{activeProject.summary}</p>
-                            <p className="projects-spotlight_description">{activeProject.description}</p>
 
-                            <div className="projects-spotlight_points">
+                            <ul className="projects-spotlight_points">
                                 {activeProject.impact.map((point, index) => (
-                                    <div key={point} className="projects-spotlight_point">
+                                    <li key={point} className="projects-spotlight_point">
                                         <span className="projects-counter">
                                             {String(index + 1).padStart(2, '0')}
                                         </span>
                                         <p>{point}</p>
-                                    </div>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
 
                             <div className="projects-spotlight_tags">
                                 {activeProject.tags.map((tag) => (
-                                    <div
-                                        key={tag.id}
-                                        className="tech-pill"
-                                        style={{ background: `${activeProject.theme.primary}12` }}
-                                    >
+                                    <span key={tag.id} className="tech-pill">
                                         {tag.path ? (
                                             <img
                                                 src={tag.path}
-                                                alt={tag.name}
+                                                alt=""
                                                 className="tech-pill_icon"
                                                 loading="lazy"
                                                 decoding="async"
                                             />
                                         ) : null}
-                                        <span>{tag.name}</span>
-                                    </div>
+                                        {tag.name}
+                                    </span>
                                 ))}
                             </div>
 
@@ -219,79 +190,37 @@ const Projects = () => {
                                     </span>
                                 )}
                             </div>
-
-                            <div className="projects-spotlight_note">
-                                <span className="card-label">Build Focus</span>
-                                <p>{activeProject.availabilityNote}</p>
-                            </div>
                         </article>
 
                         <article className="projects-showcase">
-                            <div className="projects-showcase_frame">
-                                <div className="projects-showcase_topbar">
-                                    <div className="projects-showcase_dots">
-                                        <span />
-                                        <span />
-                                        <span />
-                                    </div>
-                                    <span className="projects-showcase_count">
-                                        {activeProjectNumber} / {totalProjects}
-                                    </span>
-                                </div>
-
-                                <div
-                                    className={`projects-showcase_viewer ${
-                                        activeImageOrientation === 'portrait'
-                                            ? 'projects-showcase_viewer_portrait'
-                                            : ''
-                                    }`}
-                                >
-                                    <div className="projects-showcase_glow" aria-hidden="true" />
-                                    <span className="projects-showcase_badge">{activeProject.mark}</span>
-                                    <img
-                                        key={activeImage.src}
-                                        src={activeImage.src}
-                                        alt={activeImage.alt}
-                                        className={`projects-showcase_image projects-showcase_image_${activeImageOrientation}`}
-                                        loading="lazy"
-                                        decoding="async"
-                                        onLoad={(event) => {
-                                            const { naturalWidth, naturalHeight } = event.currentTarget;
-                                            setActiveImageOrientation(
-                                                naturalHeight > naturalWidth ? 'portrait' : 'landscape'
-                                            );
-                                        }}
-                                    />
-                                </div>
-
-                                <div className="projects-showcase_footer">
-                                    <p className="projects-showcase_caption">{activeImage.alt}</p>
-                                    <span className="projects-showcase_count">
-                                        {activeImageMode} · {activeImageNumber} / {totalImages}
-                                    </span>
-                                </div>
+                            <div
+                                className={`projects-showcase_viewer ${
+                                    activeImageOrientation === 'portrait'
+                                        ? 'projects-showcase_viewer_portrait'
+                                        : ''
+                                }`}
+                            >
+                                <img
+                                    key={activeImage.src}
+                                    src={activeImage.src}
+                                    alt={activeImage.alt}
+                                    className={`projects-showcase_image projects-showcase_image_${activeImageOrientation}`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    onLoad={(event) => {
+                                        const { naturalWidth, naturalHeight } = event.currentTarget;
+                                        setActiveImageOrientation(
+                                            naturalHeight > naturalWidth ? 'portrait' : 'landscape'
+                                        );
+                                    }}
+                                />
                             </div>
 
-                            <div className="projects-rail_controls">
-                                <span className="projects-counter">Screenshots</span>
-                                <div className="projects-arrow_group">
-                                    <button
-                                        type="button"
-                                        className="projects-arrow_button projects-arrow_buttonSecondary"
-                                        onClick={() => moveImage(-1)}
-                                        aria-label="Show previous screenshot"
-                                    >
-                                        &larr;
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="projects-arrow_button projects-arrow_buttonSecondary"
-                                        onClick={() => moveImage(1)}
-                                        aria-label="Show next screenshot"
-                                    >
-                                        &rarr;
-                                    </button>
-                                </div>
+                            <div className="projects-showcase_footer">
+                                <p className="projects-showcase_caption">{activeImage.alt}</p>
+                                <span className="projects-showcase_count">
+                                    {activeImageNumber} / {totalImages}
+                                </span>
                             </div>
 
                             <div

@@ -14,19 +14,10 @@ export default defineConfig({
           if (!id.includes('node_modules')) return undefined;
 
           if (
-            id.includes('react-globe.gl') ||
-            id.includes('three-globe') ||
-            id.includes('three-slippy-map-globe')
-          ) {
-            return 'vendor-globe';
-          }
-
-          if (
             id.includes('@react-three/fiber') ||
             id.includes('@react-three/drei') ||
             id.includes('three/') ||
-            id.includes('three-stdlib') ||
-            id.includes('maath')
+            id.includes('three-stdlib')
           ) {
             return 'vendor-three';
           }

@@ -71,7 +71,7 @@ const ExperienceSceneCanvas = ({
                 />
             ) : null}
             <Suspense fallback={<CanvasLoader />}>
-                <Developer position-y={-3} scale={3} animationName={animationName} />
+                <Developer position-y={-3.2} scale={2.9} animationName={animationName} />
             </Suspense>
         </Canvas>
     );

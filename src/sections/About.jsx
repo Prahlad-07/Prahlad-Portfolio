@@ -25,6 +25,12 @@ const copyText = async (value) => {
     return copied;
 };
 
+const facts = [
+    { id: 1, label: 'Education', value: 'B.Tech IT — GEC Bilaspur', note: '2022–2026 · CGPA 8.1' },
+    { id: 2, label: 'Best at', value: 'Backend systems & APIs', note: 'Spring Boot, databases, system design' },
+    { id: 3, label: 'Based in', value: personalInfo.location, note: 'Open to relocate / remote' },
+];
+
 const About = () => {
     const [hasCopied, setHasCopied] = useState(false);
 
@@ -40,40 +46,34 @@ const About = () => {
         <section className="section-wrap" id="about">
             <div className="shell">
                 <SectionHeader
-                    eyebrow="About Me"
+                    eyebrow="About"
                     title="Full-stack engineer who ships."
-                    description="I solve problems cleanly. I build backends that scale. I write code that makes sense. I ship fast and iterate based on feedback."
+                    description="Backend-first. Fast to build, clean to maintain."
                 />
 
                 <div className="about-layout">
                     <article className="premium-card about-story_card">
                         <p className="about-story_lead">
-                            I&apos;m a full-stack engineer focused on building backends that work. APIs, databases, system design, and problems that need thinking.
+                            I build backends that work — APIs, databases, system design, and the
+                            problems that need real thinking.
                         </p>
                         <p className="about-story_text">
-                            Right now I&apos;m at Newton School, building compiler and runtime systems. It&apos;s taught me how systems really work, the importance of clean architecture, and that shipping good code is an art.
-                        </p>
-                        <p className="about-story_text">
-                            I started competitive programming to get better at problem-solving. It worked. I&apos;ve solved 3000+ problems and it&apos;s made me a clearer thinker. I bring that rigor to every project.
+                            Right now I&apos;m at Newton School building runtime and platform systems.
+                            Competitive programming (3000+ problems) is where I learned to think
+                            clearly under pressure — I bring that rigor to every project.
                         </p>
 
-                        <div className="detail-grid">
-                            <article className="detail-card">
-                                <span className="card-label">Education</span>
-                                <strong>B.Tech IT - Government Engineering College Bilaspur</strong>
-                                <p>2022-2026. CGPA: 8.1/10</p>
-                            </article>
-                            <article className="detail-card">
-                                <span className="card-label">Best at</span>
-                                <strong>Backend systems & APIs</strong>
-                                <p>Spring Boot, databases, system design, debugging.</p>
-                            </article>
-                            <article className="detail-card">
-                                <span className="card-label">Work style</span>
-                                <strong>Fast shipping & clean code</strong>
-                                <p>I move quick. Code is readable. I ask good questions.</p>
-                            </article>
-                        </div>
+                        <dl className="about-facts">
+                            {facts.map((fact) => (
+                                <div key={fact.id} className="about-fact">
+                                    <dt>{fact.label}</dt>
+                                    <dd>
+                                        <strong>{fact.value}</strong>
+                                        <span>{fact.note}</span>
+                                    </dd>
+                                </div>
+                            ))}
+                        </dl>
 
                         <div className="about-actions">
                             <button type="button" className="button-secondary" onClick={handleCopyEmail}>
@@ -90,28 +90,31 @@ const About = () => {
                         </div>
                     </article>
 
-                    <div className="about-aside">
-                        <article className="premium-card about-achievements_card">
-                            <span className="card-label">Selected achievements</span>
-                            <div className="achievement-list">
+                    <aside className="premium-card about-panel">
+                        <div className="about-panel_block">
+                            <span className="card-label">Achievements</span>
+                            <ul className="about-list">
                                 {achievements.map((achievement) => (
-                                    <div key={achievement} className="achievement-item">
+                                    <li key={achievement}>
                                         <span className="achievement-dot" aria-hidden="true" />
                                         <p>{achievement}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div className="about-panel_block">
+                            <span className="card-label">How I work</span>
+                            <dl className="about-defs">
+                                {aboutHighlights.map((item) => (
+                                    <div key={item.id}>
+                                        <dt>{item.title}</dt>
+                                        <dd>{item.text}</dd>
                                     </div>
                                 ))}
-                            </div>
-                        </article>
-
-                        <div className="about-highlights_grid">
-                            {aboutHighlights.map((item) => (
-                                <article key={item.id} className="premium-card highlight-card">
-                                    <span className="card-label">{item.title}</span>
-                                    <p>{item.text}</p>
-                                </article>
-                            ))}
+                            </dl>
                         </div>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </section>

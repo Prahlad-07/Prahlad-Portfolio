@@ -12,20 +12,20 @@ const Hero = () => {
             <div className="shell hero-layout">
                 <div className="hero-copy">
                     <p className="section-eyebrow">{personalInfo.availability}</p>
-                    <p className="hero-name">
-                        {personalInfo.fullName}
-                        <span>{personalInfo.role}</span>
-                    </p>
+
                     <h1 className="hero-display">
-                        I build <em>fast</em> backends. I solve <em>hard</em> problems. I ship <em>clean</em> code.
+                        <span>I build <em>fast</em> backends.</span>
+                        <span>I solve <em>hard</em> problems.</span>
+                        <span>I ship <em>clean</em> code.</span>
                     </h1>
+
                     <p className="hero-body">
                         {personalInfo.intro} {personalInfo.summary}
                     </p>
 
                     <div className="hero-detail_row">
                         <span className="detail-chip">{personalInfo.location}</span>
-                        <span className="detail-chip">Spring Boot, React, and system design</span>
+                        <span className="detail-chip">Backend · Frontend · Mobile · DSA</span>
                     </div>
 
                     <div className="hero-actions">
@@ -40,27 +40,25 @@ const Hero = () => {
                         <a href="#contact" className="button-secondary">
                             Let&apos;s Talk
                         </a>
-                    </div>
-
-                    <div className="hero-social_row" aria-label="Social links">
-                        {socialActions.map((action) => (
-                            <a
-                                key={action.id}
-                                href={action.href}
-                                target={action.href.startsWith('http') ? '_blank' : undefined}
-                                rel={action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                className="text-link_chip"
-                            >
-                                {action.label}
-                            </a>
-                        ))}
+                        <div className="hero-social_row" aria-label="Social links">
+                            {socialActions.map((action) => (
+                                <a
+                                    key={action.id}
+                                    href={action.href}
+                                    target={action.href.startsWith('http') ? '_blank' : undefined}
+                                    rel={action.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                    className="text-link_chip"
+                                >
+                                    {action.label}
+                                </a>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
                 <div className="hero-visual">
-                    <article className="premium-card hero-portrait_card">
-                        <span className="hero-status_badge">Actively hiring</span>
-                        <div className="hero-portrait_glow" aria-hidden="true" />
+                    <article className="hero-portrait_card">
+                        <span className="hero-status_badge">Open to work</span>
                         <div className="hero-portrait_frame">
                             <img
                                 src="/assets/Prahlad_Yadav_Photo.jpeg"
@@ -69,10 +67,6 @@ const Hero = () => {
                                 loading="eager"
                                 decoding="async"
                             />
-                        </div>
-                        <div className="hero-note_card">
-                            <span className="card-label">Right now</span>
-                            <p>Building systems at Newton School. Looking for my next challenge.</p>
                         </div>
                     </article>
 

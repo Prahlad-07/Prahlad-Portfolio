@@ -9,8 +9,9 @@ const loadExperienceSceneCanvas = () => import('../components/ExperienceSceneCan
 const ExperienceSceneCanvas = lazy(loadExperienceSceneCanvas);
 
 const Experience = () => {
-    const [animationName, setAnimationName] = useState(workExperiences[0]?.animation || 'idle');
+    const [animationName, setAnimationName] = useState('idle');
     const [isScrolling, setIsScrolling] = useState(false);
+    const [webglSupported, setWebglSupported] = useState(true);
     const scrollTimeoutRef = useRef(0);
     const scrollFrameRef = useRef(0);
     const scrollingRef = useRef(false);
@@ -20,23 +21,31 @@ const Experience = () => {
     });
     const { isDark } = useTheme();
     const { isMobile, prefersReducedMotion, saveData, slowConnection } = useAdaptiveFlags();
-    const shouldRenderScene = hasBeenVisible;
+    const shouldRenderScene = hasBeenVisible && webglSupported;
     const isLowPowerMode = saveData || slowConnection;
     const shouldThrottleScene = isMobile || isLowPowerMode;
     const shouldAnimateScene = isVisible && (!shouldThrottleScene || !isScrolling) && !prefersReducedMotion;
 
     useEffect(() => {
-        if (typeof window === 'undefined') return undefined;
+        try {
+            const probe = document.createElement('canvas');
+            const gl =
+                probe.getContext('webgl2') ||
+                probe.getContext('webgl') ||
+                probe.getContext('experimental-webgl');
+            setWebglSupported(Boolean(gl));
+        } catch {
+            setWebglSupported(false);
+        }
+    }, []);
 
-        const preloadCanvas = () => {
-            void loadExperienceSceneCanvas();
-        };
+    useEffect(() => {
+        if (typeof window === 'undefined') return undefined;
+        const preloadCanvas = () => void loadExperienceSceneCanvas();
 
         if (typeof window.requestIdleCallback === 'function') {
             const idleId = window.requestIdleCallback(preloadCanvas, { timeout: 1400 });
-            return () => {
-                window.cancelIdleCallback?.(idleId);
-            };
+            return () => window.cancelIdleCallback?.(idleId);
         }
 
         const timeoutId = window.setTimeout(preloadCanvas, 500);
@@ -56,14 +65,12 @@ const Experience = () => {
                 scrollingRef.current = true;
                 setIsScrolling(true);
             }
-
             window.clearTimeout(scrollTimeoutRef.current);
             scrollTimeoutRef.current = window.setTimeout(stopScrollState, 140);
         };
 
         const handleScroll = () => {
             if (scrollFrameRef.current) return;
-
             scrollFrameRef.current = window.requestAnimationFrame(() => {
                 scrollFrameRef.current = 0;
                 markScrolling();
@@ -71,7 +78,6 @@ const Experience = () => {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.clearTimeout(scrollTimeoutRef.current);
@@ -79,104 +85,87 @@ const Experience = () => {
         };
     }, []);
 
+    const scenePlaceholder = webglSupported ? (
+        <div className="xp-stage_placeholder">
+            <span className="canvas-loader" aria-hidden="true" />
+        </div>
+    ) : (
+        <div className="xp-stage_placeholder">
+            <img
+                src="/assets/Prahlad_Yadav_Photo.jpeg"
+                alt="Prahlad Yadav"
+                className="xp-stage_fallbackImage"
+                loading="lazy"
+                decoding="async"
+            />
+        </div>
+    );
+
     return (
         <section ref={elementRef} className="section-wrap" id="experience">
             <div className="shell">
                 <SectionHeader
                     eyebrow="Experience"
-                    title="Experience built around learning fast, shipping reliably, and owning the details."
-                    description="My internships reflect a backend-first path: systems work, API delivery, debugging under constraints, and disciplined engineering fundamentals."
+                    title="Where I've built backend systems."
+                    description="Hover a role — the character waves back."
                 />
 
-                <div className="work-container">
-                    <div className="work-canvas">
-                        {shouldRenderScene ? (
-                            <Suspense
-                                fallback={
-                                    <div className="canvas-placeholder canvas-placeholder_tall">
-                                        <img
-                                            src="/assets/Prahlad_Yadav_Photo.jpeg"
-                                            alt="Prahlad Yadav portrait"
-                                            className="canvas-placeholder_visual"
-                                            loading="lazy"
-                                            decoding="async"
-                                        />
-                                        <p className="canvas-placeholder_text">Preparing animated profile...</p>
-                                    </div>
-                                }
-                            >
-                                <ExperienceSceneCanvas
-                                    animationName={animationName}
-                                    isActive={shouldAnimateScene}
-                                    isDark={isDark}
-                                    isLowPowerMode={isLowPowerMode}
-                                    isScrolling={isScrolling}
-                                    isMobile={isMobile}
-                                />
-                            </Suspense>
-                        ) : (
-                            <div className="canvas-placeholder canvas-placeholder_tall">
-                                <img
-                                    src="/assets/Prahlad_Yadav_Photo.jpeg"
-                                    alt="Prahlad Yadav portrait"
-                                    className="canvas-placeholder_visual"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                                <p className="canvas-placeholder_text">
-                                    Scroll to this section to load the animated preview.
-                                </p>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="work-content">
-                        <div className="work-content_inner">
-                            {workExperiences.map(({ id, name, pos, icon, duration, summary, highlights, animation }, index) => (
-                                <article
-                                    key={id}
-                                    className="work-content_container"
-                                    onClick={() => setAnimationName(animation.toLowerCase())}
-                                    onPointerOver={() => setAnimationName(animation.toLowerCase())}
-                                    onPointerOut={() => setAnimationName('idle')}
-                                    onFocus={() => setAnimationName(animation.toLowerCase())}
-                                    onBlur={() => setAnimationName('idle')}
-                                    tabIndex={0}
-                                >
-                                    <div className="work-timeline">
-                                        <div className="work-content_logo">
-                                            <img
-                                                src={icon}
-                                                alt={`${name} logo`}
-                                                className="work-content_logoImage"
-                                                loading="lazy"
-                                                decoding="async"
-                                            />
-                                        </div>
-                                        {index !== workExperiences.length - 1 ? (
-                                            <div className="work-content_bar" />
-                                        ) : null}
-                                    </div>
-
-                                    <div className="work-copy">
-                                        <span className="work-duration">{duration}</span>
-                                        <p className="work-company">{name}</p>
-                                        <h3 className="work-position">{pos}</h3>
-                                        <p className="work-summary">{summary}</p>
-
-                                        <div className="work-points">
-                                            {highlights.map((highlight) => (
-                                                <div key={highlight} className="work-point">
-                                                    <span className="achievement-dot" aria-hidden="true" />
-                                                    <p>{highlight}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </article>
-                            ))}
+                <div className="xp-layout">
+                    <div className="xp-stage">
+                        <div className="xp-stage_canvas">
+                            {shouldRenderScene ? (
+                                <Suspense fallback={scenePlaceholder}>
+                                    <ExperienceSceneCanvas
+                                        animationName={animationName}
+                                        isActive={shouldAnimateScene}
+                                        isDark={isDark}
+                                        isLowPowerMode={isLowPowerMode}
+                                        isScrolling={isScrolling}
+                                        isMobile={isMobile}
+                                    />
+                                </Suspense>
+                            ) : (
+                                scenePlaceholder
+                            )}
                         </div>
                     </div>
+
+                    <ol className="xp-list">
+                        {workExperiences.map(({ id, name, pos, icon, duration, summary, highlights, animation }) => (
+                            <li
+                                key={id}
+                                className="xp-item"
+                                tabIndex={0}
+                                onPointerOver={() => setAnimationName(animation)}
+                                onPointerOut={() => setAnimationName('idle')}
+                                onFocus={() => setAnimationName(animation)}
+                                onBlur={() => setAnimationName('idle')}
+                            >
+                                <span className="xp-item_period">{duration}</span>
+
+                                <div className="xp-item_head">
+                                    <span className="xp-item_logo">
+                                        <img src={icon} alt={`${name} logo`} loading="lazy" decoding="async" />
+                                    </span>
+                                    <div className="xp-item_titles">
+                                        <h3 className="xp-item_role">{pos}</h3>
+                                        <p className="xp-item_org">{name}</p>
+                                    </div>
+                                </div>
+
+                                <p className="xp-item_summary">{summary}</p>
+
+                                <ul className="xp-points">
+                                    {highlights.map((highlight) => (
+                                        <li key={highlight} className="xp-point">
+                                            <span className="xp-point_marker" aria-hidden="true" />
+                                            <p>{highlight}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
+                    </ol>
                 </div>
             </div>
         </section>

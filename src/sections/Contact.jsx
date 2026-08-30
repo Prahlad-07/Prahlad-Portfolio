@@ -139,37 +139,40 @@ const Contact = () => {
             <div className="shell">
                 <SectionHeader
                     eyebrow="Contact"
-                    title="Let&apos;s build something meaningful together."
-                    description="If you are hiring for a software engineering role, want to discuss a project, or just want to connect, I&apos;d be happy to hear from you."
+                    title="Let&apos;s build something together."
+                    description="Hiring, a project, or just to connect — reach out."
                 />
 
                 <div className="contact-layout">
                     <aside className="premium-card contact-info_card">
-                        <span className="card-label">Open to hiring and collaboration</span>
-                        <h3>Backend-focused, product-aware, and ready for high-impact work.</h3>
-                        <p>
-                            I&apos;m open to full-time software engineering roles, internships, and strong product engineering opportunities where ownership and execution quality matter.
-                        </p>
+                        <span className="card-label">Open to work</span>
+                        <h3>Backend-focused, product-aware, ready to ship.</h3>
+                        <p>Full-time SDE roles and strong product engineering teams.</p>
 
-                        <div className="contact-detail_stack">
-                            <a href={`mailto:${personalInfo.email}`} className="contact-detail_card">
-                                <span>Email</span>
-                                <strong>{personalInfo.email}</strong>
-                            </a>
-                            <div className="contact-detail_card">
-                                <span>Location</span>
-                                <strong>{personalInfo.location}</strong>
+                        <dl className="contact-detail_stack">
+                            <div className="contact-detail_row">
+                                <dt>Email</dt>
+                                <dd>
+                                    <a href={`mailto:${personalInfo.email}`}>{personalInfo.email}</a>
+                                </dd>
                             </div>
-                            <a
-                                href={personalInfo.resumeUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-detail_card"
-                            >
-                                <span>Resume</span>
-                                <strong>Open latest version</strong>
-                            </a>
-                        </div>
+                            <div className="contact-detail_row">
+                                <dt>Location</dt>
+                                <dd>{personalInfo.location}</dd>
+                            </div>
+                            <div className="contact-detail_row">
+                                <dt>Resume</dt>
+                                <dd>
+                                    <a
+                                        href={personalInfo.resumeUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Open latest version
+                                    </a>
+                                </dd>
+                            </div>
+                        </dl>
 
                         <div className="contact-social_row" aria-label="Social profiles">
                             {profileLinks.map((item) => (

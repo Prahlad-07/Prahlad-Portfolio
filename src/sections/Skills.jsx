@@ -7,8 +7,8 @@ const Skills = () => {
             <div className="shell">
                 <SectionHeader
                     eyebrow="Skills"
-                    title="A stack shaped around shipping production-quality software."
-                    description="My toolkit is strongest in backend engineering, but it is broad enough to build complete products with good architecture, thoughtful interfaces, and reliable delivery."
+                    title="Backend depth, full-stack range."
+                    description="Spring Boot and system design at the core, with the frontend and DevOps to build end to end."
                 />
 
                 <div className="skills-grid">
@@ -43,7 +43,7 @@ const Skills = () => {
                 <article className="premium-card skills-proof_card">
                     <div className="skills-proof_intro">
                         <span className="card-label">Proof of craft</span>
-                        <h3>Competitive programming and open-source consistency reinforce the engineering fundamentals behind the product work.</h3>
+                        <h3>Competitive programming and daily open-source keep the fundamentals sharp.</h3>
                     </div>
 
                     <div className="profile-grid">

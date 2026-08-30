@@ -20,7 +20,7 @@ const applyTheme = (theme) => {
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', theme === 'dark' ? '#0d1117' : '#f8f4ec');
+        themeColorMeta.setAttribute('content', theme === 'dark' ? '#0a0a0c' : '#fcfbf9');
     }
 };
 

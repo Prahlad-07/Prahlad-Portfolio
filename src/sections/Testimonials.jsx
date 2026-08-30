@@ -7,8 +7,8 @@ const Testimonials = () => {
             <div className="shell">
                 <SectionHeader
                     eyebrow="Recommendations"
-                    title="Trusted by mentors, engineering leaders, and collaborators."
-                    description="These recommendations reflect how I show up in real environments: accountable, technically curious, and focused on dependable execution."
+                    title="Trusted by mentors and teammates."
+                    description="From people I've built and shipped with."
                 />
 
                 <div className="recommendations-grid">

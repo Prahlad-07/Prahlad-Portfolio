@@ -4,12 +4,10 @@ export const personalInfo = {
     role: 'Full-Stack Engineer',
     email: 'prahlad.yadav.off@gmail.com',
     location: 'Delhi, India',
-    resumeUrl: 'https://drive.google.com/file/d/1Igjw5KDPoXfMwAvsrA46lQSuS4cOE6WH/view?usp=drive_link',
-    availability: 'Open to full-time SDE roles and impactful projects',
-    intro:
-        'Full-stack engineer. I build fast APIs, solve hard problems, and ship reliable code that scales.',
-    summary:
-        'Strong at backend systems, databases, and low-level design. I enjoy taking messy problems and turning them into clean, production-ready solutions.',
+    resumeUrl: 'https://drive.google.com/file/d/1WJZfS_LISgbVF3hCU8XHG348yHrlKNjW/view?usp=sharing',
+    availability: 'Open to full-time SDE roles',
+    intro: 'Backend-first engineer.',
+    summary: 'I turn messy problems into clean systems that scale.',
     socialLinks: {
         linkedin: 'https://linkedin.com/in/prahlad-yadav-07',
         github: 'https://github.com/Prahlad-07',
@@ -19,123 +17,62 @@ export const personalInfo = {
 
 export const navLinks = [
     { id: 1, name: 'Home', href: '#home' },
-    { id: 2, name: 'Experience', href: '#experience' },
-    { id: 3, name: 'Skills', href: '#skills' },
-    { id: 4, name: 'Projects', href: '#projects' },
-    { id: 5, name: 'Recommendations', href: '#recommendations' },
-    { id: 6, name: 'Contact', href: '#contact' },
+    { id: 2, name: 'About', href: '#about' },
+    { id: 3, name: 'Experience', href: '#experience' },
+    { id: 4, name: 'Skills', href: '#skills' },
+    { id: 5, name: 'Projects', href: '#projects' },
+    { id: 6, name: 'Recommendations', href: '#recommendations' },
+    { id: 7, name: 'Contact', href: '#contact' },
 ];
 
 export const heroMetrics = [
-    {
-        id: 1,
-        value: 'Top 1%',
-        label: 'Competitive Programmer',
-        detail: 'Solved 3000+ problems across LeetCode, Codeforces, CodeChef, and HackerRank.',
-    },
-    {
-        id: 2,
-        value: '5+',
-        label: 'Full-Stack Products',
-        detail: 'Built and shipped real products with 10,000+ lines of production code.',
-    },
-    {
-        id: 3,
-        value: '2500+',
-        label: 'GitHub Commits',
-        detail: 'Consistent shipping for 12+ months straight.',
-    },
-    {
-        id: 4,
-        value: '4',
-        label: 'Mobile Apps',
-        detail: 'Android apps used by 1000+ students on campus.',
-    },
+    { id: 1, value: 'Top 1%', label: 'Competitive Programmer', detail: '3000+ problems solved' },
+    { id: 2, value: '5+', label: 'Products Shipped', detail: 'Real users, production code' },
+    { id: 3, value: '2500+', label: 'GitHub Commits', detail: '12 months, no gaps' },
+    { id: 4, value: '4', label: 'Android Apps', detail: '1000+ campus users' },
 ];
 
 export const aboutHighlights = [
-    {
-        id: 1,
-        title: 'Fast Shipping',
-        text: 'I turn ideas into working code quickly. No over-engineering, just solutions that work.',
-    },
-    {
-        id: 2,
-        title: 'Clean Code',
-        text: 'My code is readable, maintainable, and documented. Other developers can jump in and understand it.',
-    },
-    {
-        id: 3,
-        title: 'Problem Solver',
-        text: 'I solve hard problems by breaking them down. Competitive programming trained me to think clearly under pressure.',
-    },
+    { id: 1, title: 'Fast Shipping', text: 'Ideas to working code, quickly. No over-engineering.' },
+    { id: 2, title: 'Clean Code', text: 'Readable, documented, easy for anyone to pick up.' },
+    { id: 3, title: 'Problem Solver', text: '3000+ problems trained me to think under pressure.' },
 ];
 
 export const achievements = [
-    'AIR 311 in ICPC Kanpur - one of India\'s top programming contests.',
-    'Ranked 1446 out of 25,000+ teams in Amazon ML Challenge 2025.',
-    'LeetCode Guardian (max 2150+), Codeforces Expert (max 1680+), CodeChef 4-star.',
-    'Built and shipped 5+ full-stack products used by real users.',
+    'AIR 311 — ICPC Kanpur',
+    'Rank 1446 / 25,000+ teams — Amazon ML Challenge 2025',
+    'LeetCode Guardian 2150+, Codeforces Expert 1680+, CodeChef 4★',
+    '5+ full-stack products shipped to real users',
 ];
 
 export const skillGroups = [
     {
         id: 1,
         title: 'Backend & APIs',
-        description: 'Where I shine. Spring Boot, REST APIs, databases, and system design.',
+        description: 'My core strength.',
         accent: '#0f766e',
-        items: [
-            'Java',
-            'Spring Boot',
-            'Spring Security',
-            'Hibernate',
-            'REST APIs',
-            'JWT',
-            'Microservices',
-            'Low-Level Design',
-        ],
+        items: ['Java', 'Spring Boot', 'Spring Security', 'Hibernate', 'REST APIs', 'JWT', 'Microservices', 'Low-Level Design'],
     },
     {
         id: 2,
         title: 'Frontend & UI',
-        description: 'React and modern CSS. I build interfaces that users love.',
+        description: 'React and modern CSS.',
         accent: '#c2410c',
-        items: [
-            'React',
-            'JavaScript',
-            'Tailwind CSS',
-            'HTML & CSS',
-            'Responsive Design',
-            'Component Design',
-        ],
+        items: ['React', 'JavaScript', 'Tailwind CSS', 'HTML & CSS', 'Responsive Design', 'Component Design'],
     },
     {
         id: 3,
         title: 'DevOps & Tools',
-        description: 'Git, Docker, AWS, and everything needed to ship fast.',
+        description: 'Ship fast, deploy clean.',
         accent: '#1d4ed8',
-        items: [
-            'Git & GitHub',
-            'AWS',
-            'Docker',
-            'Maven & Gradle',
-            'Postman',
-            'Linux',
-        ],
+        items: ['Git & GitHub', 'AWS', 'Docker', 'Maven & Gradle', 'Postman', 'Linux'],
     },
     {
         id: 4,
         title: 'Fundamentals',
-        description: 'Data structures, algorithms, OS, networking - the deep stuff.',
+        description: 'The deep stuff.',
         accent: '#7c3aed',
-        items: [
-            'Data Structures',
-            'Algorithms',
-            'Operating Systems',
-            'Databases (SQL)',
-            'System Design',
-            'C/C++',
-        ],
+        items: ['Data Structures', 'Algorithms', 'Operating Systems', 'Databases (SQL)', 'System Design', 'C/C++'],
     },
 ];
 
@@ -145,7 +82,7 @@ export const codingProfiles = [
         platform: 'LeetCode',
         handle: 'Prahlad_07',
         url: 'https://leetcode.com/u/Prahlad_07/',
-        highlight: 'Guardian badge with 2150+ max rating.',
+        highlight: 'Guardian badge, 2150+ max rating.',
         badge: '2150+ Max',
         color: '#d97706',
         icon: '/assets/codingProfiles/Leetcode.png',
@@ -165,7 +102,7 @@ export const codingProfiles = [
         platform: 'Codeforces',
         handle: 'CenterNewHero',
         url: 'https://codeforces.com/profile/CenterNewHero',
-        highlight: 'Expert title with a 1610+ max rating.',
+        highlight: 'Expert, 1610+ max rating.',
         badge: 'Expert',
         color: '#0369a1',
         icon: '/assets/codingProfiles/codforces.png',
@@ -175,7 +112,7 @@ export const codingProfiles = [
         platform: 'GeeksforGeeks',
         handle: 'prahlad_07',
         url: 'https://www.geeksforgeeks.org/profile/prahlad_07',
-        highlight: '4-star consistency across problem-solving tracks.',
+        highlight: '4-star across problem-solving tracks.',
         badge: '4 Star',
         color: '#15803d',
         icon: '/assets/codingProfiles/geekforgeeks.png',
@@ -195,7 +132,7 @@ export const codingProfiles = [
         platform: 'CodeChef',
         handle: 'mr_shyyy_07',
         url: 'https://www.codechef.com/users/mr_shyyy_07',
-        highlight: '4-star rating with strong contest discipline.',
+        highlight: '4-star, strong contest discipline.',
         badge: '4 Star',
         color: '#ea580c',
         icon: '/assets/codingProfiles/codechef.png',
@@ -212,20 +149,15 @@ export const myProjects = [
         repoState: 'Public repo',
         repoUrl: 'https://github.com/Prahlad-07/BookMySalon',
         repoLabel: 'View Repository',
-        summary:
-            'A real salon booking app. Salon owners can manage bookings, customers can discover and book salons nearby.',
-        description:
-            'Full-stack with secure login, booking system, real-time chat, and location search. Built with Java, Spring Boot, React, and MySQL.',
+        summary: 'Owners manage bookings; customers discover and book salons nearby.',
+        description: 'Full-stack: Java, Spring Boot, React, MySQL.',
         impact: [
-            'JWT auth + Google login. Real-time chat with WebSocket.',
-            'Booking logic with time-slot validation and role-based access control.',
-            'Mapbox integration for salon discovery. Dockerized backend.',
+            'JWT + Google auth, real-time chat over WebSocket',
+            'Time-slot validation with role-based access control',
+            'Mapbox discovery, Dockerized backend',
         ],
         availabilityNote: 'Real product, real users, production code.',
-        theme: {
-            primary: '#0f766e',
-            secondary: '#d97706',
-        },
+        theme: { primary: '#0f766e', secondary: '#d97706' },
         tags: [
             { id: 1, name: 'Java', path: '/assets/file-java-color-green-icon.svg' },
             { id: 2, name: 'Spring Boot', path: '/assets/icons8-spring-boot.svg' },
@@ -235,31 +167,11 @@ export const myProjects = [
             { id: 6, name: 'Mapbox' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/BookMySalon/firstImage.png',
-                alt: 'BookMySalon landing screen screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/BookMySalon/img.png',
-                alt: 'BookMySalon booking interface screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/BookMySalon/img_1.png',
-                alt: 'BookMySalon salon details screen screenshot',
-            },
-            {
-                id: 4,
-                src: '/assets/Projects-Images/BookMySalon/img_2.png',
-                alt: 'BookMySalon management flow screenshot',
-            },
-            {
-                id: 5,
-                src: '/assets/Projects-Images/BookMySalon/secondImage.png',
-                alt: 'BookMySalon dashboard screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/BookMySalon/firstImage.webp', alt: 'BookMySalon landing screen' },
+            { id: 2, src: '/assets/Projects-Images/BookMySalon/img.webp', alt: 'BookMySalon booking interface' },
+            { id: 3, src: '/assets/Projects-Images/BookMySalon/img_1.webp', alt: 'BookMySalon salon details screen' },
+            { id: 4, src: '/assets/Projects-Images/BookMySalon/img_2.webp', alt: 'BookMySalon management flow' },
+            { id: 5, src: '/assets/Projects-Images/BookMySalon/secondImage.webp', alt: 'BookMySalon dashboard' },
         ],
     },
     {
@@ -271,20 +183,15 @@ export const myProjects = [
         repoState: 'Private repo',
         repoUrl: 'https://github.com/Prahlad-07/GECB_APP',
         repoLabel: 'Repository Link',
-        summary:
-            'Official Android app for my college. Notices, timetables, faculty info, events, and clubs - all in one place.',
-        description:
-            'Before this, students had to check multiple groups and websites. This app unified everything into one clean, fast app. Built with Kotlin and Firebase.',
+        summary: 'Official Android app for my college — notices, timetables, events, one place.',
+        description: 'Kotlin, Jetpack Compose, Firebase.',
         impact: [
-            'Admin and student dashboards for managing notices, timetables, and events.',
-            'Firebase for auth, messaging, and offline support so it works even without internet.',
-            '1000+ college students are using this app daily.',
+            'Admin and student dashboards',
+            'Firebase auth, messaging, offline support',
+            '1000+ students using it daily',
         ],
         availabilityNote: 'Real product, real users, production code.',
-        theme: {
-            primary: '#c2410c',
-            secondary: '#0f766e',
-        },
+        theme: { primary: '#c2410c', secondary: '#0f766e' },
         tags: [
             { id: 1, name: 'Kotlin' },
             { id: 2, name: 'Jetpack Compose' },
@@ -294,51 +201,15 @@ export const myProjects = [
             { id: 6, name: 'Android' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/GEC-B%20App/1.png',
-                alt: 'GEC-B App home screen screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/GEC-B%20App/2.png',
-                alt: 'GEC-B App timetable interface screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/GEC-B%20App/image.png',
-                alt: 'GEC-B App notice interface screenshot',
-            },
-            {
-                id: 4,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy.png',
-                alt: 'GEC-B App student dashboard screenshot',
-            },
-            {
-                id: 5,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy%202.png',
-                alt: 'GEC-B App admin interface screenshot',
-            },
-            {
-                id: 6,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy%203.png',
-                alt: 'GEC-B App faculty directory screenshot',
-            },
-            {
-                id: 7,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy%204.png',
-                alt: 'GEC-B App event screen screenshot',
-            },
-            {
-                id: 8,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy%205.png',
-                alt: 'GEC-B App community screen screenshot',
-            },
-            {
-                id: 9,
-                src: '/assets/Projects-Images/GEC-B%20App/image%20copy%206.png',
-                alt: 'GEC-B App additional mobile workflow screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/GEC-B%20App/1.webp', alt: 'GEC-B App home screen' },
+            { id: 2, src: '/assets/Projects-Images/GEC-B%20App/2.webp', alt: 'GEC-B App timetable interface' },
+            { id: 3, src: '/assets/Projects-Images/GEC-B%20App/image.webp', alt: 'GEC-B App notice interface' },
+            { id: 4, src: '/assets/Projects-Images/GEC-B%20App/image%20copy.webp', alt: 'GEC-B App student dashboard' },
+            { id: 5, src: '/assets/Projects-Images/GEC-B%20App/image%20copy%202.webp', alt: 'GEC-B App admin interface' },
+            { id: 6, src: '/assets/Projects-Images/GEC-B%20App/image%20copy%203.webp', alt: 'GEC-B App faculty directory' },
+            { id: 7, src: '/assets/Projects-Images/GEC-B%20App/image%20copy%204.webp', alt: 'GEC-B App event screen' },
+            { id: 8, src: '/assets/Projects-Images/GEC-B%20App/image%20copy%205.webp', alt: 'GEC-B App community screen' },
+            { id: 9, src: '/assets/Projects-Images/GEC-B%20App/image%20copy%206.webp', alt: 'GEC-B App mobile workflow' },
         ],
     },
     {
@@ -350,20 +221,15 @@ export const myProjects = [
         repoState: 'Public repo',
         repoUrl: 'https://github.com/Prahlad-07/Structify.io-',
         repoLabel: 'View Repository',
-        summary:
-            'Platform for learning data structures visually. See how algorithms actually work.',
-        description:
-            'Interactive visualizations of algorithms, progress tracking, and structured learning paths. Full-stack with Spring Boot backend and React frontend.',
+        summary: 'Learn data structures visually — watch the algorithms run.',
+        description: 'Spring Boot backend, React frontend.',
         impact: [
-            'Real-time algorithm visualizations. You can see code running.',
-            'Role-based access, JWT auth, and secure learning workflows.',
-            'Docker containerized for easy deployment.',
+            'Real-time algorithm visualizations',
+            'JWT auth, role-based access',
+            'Dockerized deployment',
         ],
-        availabilityNote: 'Full-stack learning platform. Real product, real code.',
-        theme: {
-            primary: '#1d4ed8',
-            secondary: '#7c3aed',
-        },
+        availabilityNote: 'Full-stack learning platform.',
+        theme: { primary: '#1d4ed8', secondary: '#7c3aed' },
         tags: [
             { id: 1, name: 'Java', path: '/assets/file-java-color-green-icon.svg' },
             { id: 2, name: 'Spring Boot', path: '/assets/icons8-spring-boot.svg' },
@@ -373,26 +239,10 @@ export const myProjects = [
             { id: 6, name: 'JWT' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/Structify/firstImage.png',
-                alt: 'Structify home screen screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/Structify/image%20copy.png',
-                alt: 'Structify learning interface screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/Structify/image%20copy%202.png',
-                alt: 'Structify visualization screen screenshot',
-            },
-            {
-                id: 4,
-                src: '/assets/Projects-Images/Structify/image%20copy%203.png',
-                alt: 'Structify dashboard screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/Structify/firstImage.webp', alt: 'Structify home screen' },
+            { id: 2, src: '/assets/Projects-Images/Structify/image%20copy.webp', alt: 'Structify learning interface' },
+            { id: 3, src: '/assets/Projects-Images/Structify/image%20copy%202.webp', alt: 'Structify visualization screen' },
+            { id: 4, src: '/assets/Projects-Images/Structify/image%20copy%203.webp', alt: 'Structify dashboard' },
         ],
     },
     {
@@ -404,20 +254,15 @@ export const myProjects = [
         repoState: 'Public repo',
         repoUrl: 'https://github.com/Prahlad-07/CodeSiksha',
         repoLabel: 'View Repository',
-        summary:
-            'Mobile app for daily DSA practice. Problem reminders, streaks, progress tracking.',
-        description:
-            'A study companion. Daily problems, contest updates, progress dashboards. Built with Flutter so it works on iOS and Android.',
+        summary: 'Daily DSA practice — reminders, streaks, progress tracking.',
+        description: 'Flutter, iOS and Android.',
         impact: [
-            'Daily problem reminders and streak systems to keep people practicing.',
-            'Firebase sync so your data is always up to date across devices.',
-            'Clean BLoC architecture for maintainable mobile code.',
+            'Daily problems and streak tracking',
+            'Firebase sync across devices',
+            'Clean BLoC architecture',
         ],
-        availabilityNote: 'Real mobile product. Used by actual students.',
-        theme: {
-            primary: '#0f766e',
-            secondary: '#1d4ed8',
-        },
+        availabilityNote: 'Real mobile product, used by students.',
+        theme: { primary: '#0f766e', secondary: '#1d4ed8' },
         tags: [
             { id: 1, name: 'Flutter' },
             { id: 2, name: 'Dart' },
@@ -426,21 +271,9 @@ export const myProjects = [
             { id: 5, name: 'SQLite' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/CodeSiksha/1.png',
-                alt: 'CodeSiksha home screen screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/CodeSiksha/2.png',
-                alt: 'CodeSiksha practice screen screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/CodeSiksha/3.png',
-                alt: 'CodeSiksha dashboard screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/CodeSiksha/1.webp', alt: 'CodeSiksha home screen' },
+            { id: 2, src: '/assets/Projects-Images/CodeSiksha/2.webp', alt: 'CodeSiksha practice screen' },
+            { id: 3, src: '/assets/Projects-Images/CodeSiksha/3.webp', alt: 'CodeSiksha dashboard' },
         ],
     },
     {
@@ -452,20 +285,15 @@ export const myProjects = [
         repoState: 'Repository on request',
         repoUrl: '',
         repoLabel: 'Repository on Request',
-        summary:
-            'AI SaaS: Upload a photo, background gets removed. Paid with credits. Learned monetization.',
-        description:
-            'Payment integration, auth, credit-based usage model. Backend handles payments and AI API calls cleanly.',
+        summary: 'Upload a photo, background removed. Credit-based payments.',
+        description: 'Spring Boot APIs around an AI integration.',
         impact: [
-            'Stripe + Razorpay payments integrated. Users buy credits to use the service.',
-            'Clean backend APIs around AI integration. Error handling that works.',
-            'Built it to understand how SaaS monetization actually works.',
+            'Stripe + Razorpay credit payments',
+            'Clean APIs around the AI integration',
+            'Built to learn SaaS monetization',
         ],
-        availabilityNote: 'Real product, real payments, real users.',
-        theme: {
-            primary: '#7c3aed',
-            secondary: '#1d4ed8',
-        },
+        availabilityNote: 'Real product, real payments.',
+        theme: { primary: '#7c3aed', secondary: '#1d4ed8' },
         tags: [
             { id: 1, name: 'Java', path: '/assets/file-java-color-green-icon.svg' },
             { id: 2, name: 'Spring Boot', path: '/assets/icons8-spring-boot.svg' },
@@ -475,26 +303,10 @@ export const myProjects = [
             { id: 6, name: 'Clerk' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/BG-Removal/img1.png',
-                alt: 'Background removal SaaS dashboard screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/BG-Removal/img2.png',
-                alt: 'Background removal upload workflow screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/BG-Removal/img3.png',
-                alt: 'Background removal credits interface screenshot',
-            },
-            {
-                id: 4,
-                src: '/assets/Projects-Images/BG-Removal/img4.png',
-                alt: 'Background removal account screen screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/BG-Removal/img1.webp', alt: 'Background removal SaaS dashboard' },
+            { id: 2, src: '/assets/Projects-Images/BG-Removal/img2.webp', alt: 'Background removal upload workflow' },
+            { id: 3, src: '/assets/Projects-Images/BG-Removal/img3.webp', alt: 'Background removal credits interface' },
+            { id: 4, src: '/assets/Projects-Images/BG-Removal/img4.webp', alt: 'Background removal account screen' },
         ],
     },
     {
@@ -506,20 +318,15 @@ export const myProjects = [
         repoState: 'Public repo',
         repoUrl: 'https://github.com/Prahlad-07/Netflix-Clone',
         repoLabel: 'View Repository',
-        summary:
-            'Netflix UI clone. Learned React patterns by building something real.',
-        description:
-            'Movies, categories, player, auth. Built to practice React architecture and integrations.',
+        summary: 'Netflix UI clone — built to learn React architecture.',
+        description: 'React, Firebase, TMDB API.',
         impact: [
-            'Category browsing, trailers, video player that actually works.',
-            'Auth with Firebase. Protected routes. Responsive design.',
-            'API integration with TMDB. Taught me how to build real frontend systems.',
+            'Browsing, trailers, working video player',
+            'Firebase auth, protected routes',
+            'TMDB API integration',
         ],
         availabilityNote: 'Learning project that taught me React.',
-        theme: {
-            primary: '#b91c1c',
-            secondary: '#111827',
-        },
+        theme: { primary: '#b91c1c', secondary: '#111827' },
         tags: [
             { id: 1, name: 'React', path: '/assets/react.svg' },
             { id: 2, name: 'JavaScript', path: '/assets/javascript-programming-language-icon.svg' },
@@ -528,26 +335,10 @@ export const myProjects = [
             { id: 5, name: 'CSS' },
         ],
         images: [
-            {
-                id: 1,
-                src: '/assets/Projects-Images/Netflix-Clone/1.png',
-                alt: 'Netflix Clone homepage screenshot',
-            },
-            {
-                id: 2,
-                src: '/assets/Projects-Images/Netflix-Clone/2.png',
-                alt: 'Netflix Clone browsing interface screenshot',
-            },
-            {
-                id: 3,
-                src: '/assets/Projects-Images/Netflix-Clone/3.png',
-                alt: 'Netflix Clone player screen screenshot',
-            },
-            {
-                id: 4,
-                src: '/assets/Projects-Images/Netflix-Clone/4.png',
-                alt: 'Netflix Clone authentication screen screenshot',
-            },
+            { id: 1, src: '/assets/Projects-Images/Netflix-Clone/1.webp', alt: 'Netflix Clone homepage' },
+            { id: 2, src: '/assets/Projects-Images/Netflix-Clone/2.webp', alt: 'Netflix Clone browsing interface' },
+            { id: 3, src: '/assets/Projects-Images/Netflix-Clone/3.webp', alt: 'Netflix Clone player screen' },
+            { id: 4, src: '/assets/Projects-Images/Netflix-Clone/4.webp', alt: 'Netflix Clone authentication screen' },
         ],
     },
 ];
@@ -556,14 +347,13 @@ export const workExperiences = [
     {
         id: 1,
         name: 'Newton School',
-        pos: 'Software Development Engineer-1',
-        duration: 'June 2026 - Present',
-        summary:
-            'Building reliable backend systems and platform features for Newton School.',
+        pos: 'Software Development Engineer I',
+        duration: 'Jun 2026 — Present',
+        summary: 'Building and scaling the backend that powers the learning platform.',
         highlights: [
-            'Built a Redis-backed cache for frequently accessed assignment data, reducing database load by 70% and keeping API response times below 50 ms.',
-            'Developed and maintained Dockerized REST APIs for assignment, user, and content-management features, secured through Spring Cloud Gateway and JWT authentication.',
-            'Implemented Resilience4j circuit breakers and retry policies around downstream service calls to improve fault tolerance for thousands of daily users.',
+            'Designed a Redis-backed caching layer for high-traffic assignment data, cutting database load by ~70% and holding API response times under 50 ms for thousands of daily users.',
+            'Built and shipped Dockerized REST APIs for assignment, user, and content-management services, secured end-to-end with Spring Cloud Gateway routing and JWT authentication.',
+            'Hardened downstream service calls with Resilience4j circuit breakers and retry policies, keeping the platform responsive even when dependent services failed.',
         ],
         icon: '/assets/Newton-School.png',
         animation: 'victory',
@@ -572,12 +362,12 @@ export const workExperiences = [
         id: 2,
         name: 'Newton School',
         pos: 'Software Development Engineer Intern',
-        duration: 'December 2025 - May 2026',
-        summary:
-            'Contributed to backend systems that serve 10,000+ daily active users across Newton School platforms.',
+        duration: 'Dec 2025 — May 2026',
+        summary: 'Backend services trusted by 10,000+ daily active users.',
         highlights: [
-            'Maintained and scaled backend services used by 10,000+ daily active users at Newton School and Newton School of Technology.',
-            'Developed a code-plagiarism detection system for the Athena platform by integrating the industry-standard JPlag engine for efficient similarity analysis.',
+            'Maintained and scaled core backend services powering 10,000+ daily active users across Newton School and Newton School of Technology.',
+            'Shipped a code-plagiarism detection system for the Athena assessment platform by integrating the industry-standard JPlag engine, giving instructors automated similarity reports.',
+            'Owned bug fixes and feature slices end to end — from ticket to production — with test coverage and code review on every change.',
         ],
         icon: '/assets/Newton-School.png',
         animation: 'clapping',
@@ -586,12 +376,12 @@ export const workExperiences = [
         id: 3,
         name: 'MIDAS Lab',
         pos: 'Software Development Engineer Intern',
-        duration: 'July 2024 - September 2024',
-        summary:
-            'Collaborated with Android and backend teams to deliver scalable modules for a production mobile application.',
+        duration: 'Jul 2024 — Sep 2024',
+        summary: 'Delivered scalable feature modules for a production mobile app.',
         highlights: [
-            'Integrated and validated RESTful APIs to provide scalable communication and consistent data flow across services.',
-            'Contributed to debugging, code reviews, and Agile development cycles to improve reliability and maintainability.',
+            'Integrated and validated RESTful APIs between the Android and backend teams, ensuring consistent data flow across services for a production app.',
+            'Debugged production issues and drove fixes through code reviews and Agile sprint cycles, measurably improving module reliability and maintainability.',
+            'Collaborated across Android and backend teams to design and ship feature modules on schedule.',
         ],
         icon: '/assets/MIDAS.png',
         animation: 'clapping',
@@ -600,12 +390,11 @@ export const workExperiences = [
         id: 4,
         name: 'TechCurators',
         pos: 'Problem Setter Intern',
-        duration: 'May 2024 - July 2024',
-        summary:
-            'Created medium-to-hard DSA problems for technical hiring assessments.',
+        duration: 'May 2024 — Jul 2024',
+        summary: 'Authored DSA problems used to screen engineering candidates.',
         highlights: [
-            'Designed hiring-test problems with clear constraints and evaluation standards.',
-            'Rigorously tested every problem for clarity, correctness, and optimal solutions across edge and corner cases.',
+            'Designed medium-to-hard DSA problems for technical hiring assessments, each with precise constraints, scoring rubrics, and reference solutions.',
+            'Stress-tested every problem across edge and corner cases to guarantee correctness and a single optimal solution before release.',
         ],
         icon: '/assets/techcurators.png',
         animation: 'salute',
@@ -617,7 +406,7 @@ export const clientReviews = [
         id: 1,
         name: 'Satyendra Yadav',
         position: 'Principal Technical Program Manager, Perforce Software | Ex: Samsung R&D',
-        img: '/assets/review2.png',
+        img: '/assets/review2.webp',
         review:
             'Prahlad stands out for his ability to move from concept to reliable implementation quickly. He combines strong DSA depth with practical backend engineering, and his execution style is disciplined enough for production-oriented teams.',
     },
@@ -625,7 +414,7 @@ export const clientReviews = [
         id: 2,
         name: 'Dr. Rajiv Ratn Shah',
         position: 'Founder, MIDAS',
-        img: '/assets/review3.png',
+        img: '/assets/review3.webp',
         review:
             'During his internship at MIDAS Lab, Prahlad worked closely with Android and backend teams and consistently delivered with ownership. His approach to API validation, debugging, and sprint collaboration reflected maturity beyond his experience level.',
     },
@@ -633,7 +422,7 @@ export const clientReviews = [
         id: 3,
         name: 'Brijesh Shukla',
         position: 'Senior Electronic Engineer, Wabtec (United Kingdom)',
-        img: '/assets/review4.png',
+        img: '/assets/review4.webp',
         review:
             'Prahlad is focused, technically curious, and dependable. He learns fast, asks the right engineering questions, and then turns that clarity into measurable output. His consistency and work ethic make him a strong long-term contributor.',
     },
@@ -641,7 +430,7 @@ export const clientReviews = [
         id: 4,
         name: 'Satyendra Yadav',
         position: 'Integration Lead, IBM | Ex: Accenture United Kingdom',
-        img: '/assets/review1.png',
+        img: '/assets/review1.webp',
         review:
             'I appreciate Prahlad\'s integration mindset. He understands how APIs, services, and system behavior connect end-to-end, and he communicates clearly while debugging issues under tight timelines. That combination is valuable in real delivery environments.',
     },
@@ -649,7 +438,7 @@ export const clientReviews = [
         id: 5,
         name: 'Bhavya Garg',
         position: 'SDE, Newton School | Mentor of Prahlad',
-        img: '/assets/review5.png',
+        img: '/assets/review5.webp',
         review:
             'As Prahlad\'s mentor, I\'ve seen him stay punctual, accountable, and highly coachable. He keeps team energy positive with his humor, but when it comes to delivery, he is serious and reliable. He has grown into a strong, execution-first engineer.',
     },
