@@ -22,11 +22,11 @@ const ProjectsPreview = () => {
     const shot = p.images[img];
 
     return (
-        <div className="pv pv-proj">
+        <div className="pv pv-proj" data-stagger>
             <p className="pv_run">$ npm run projects</p>
 
             <div className="proj_grid">
-                <ul className="proj_tabs">
+                <ul className="proj_tabs" data-stagger>
                     {myProjects.map((pr, i) => (
                         <li key={pr.id}>
                             <button

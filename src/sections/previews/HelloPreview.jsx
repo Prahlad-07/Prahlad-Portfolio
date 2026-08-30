@@ -2,7 +2,7 @@ import { personalInfo, heroMetrics } from '../../constants/index.js';
 import { IconExternal } from '../../components/ide/icons.jsx';
 
 const HelloPreview = () => (
-    <div className="pv pv-hello">
+    <div className="pv pv-hello" data-stagger>
         <p className="pv_run">$ node hello.ts</p>
 
         <div className="hello_card">
@@ -39,7 +39,7 @@ const HelloPreview = () => (
             </div>
         </div>
 
-        <div className="hello_stats">
+        <div className="hello_stats" data-stagger>
             {heroMetrics.map((m) => (
                 <div className="hello_stat" key={m.id}>
                     <b>{m.value}</b>

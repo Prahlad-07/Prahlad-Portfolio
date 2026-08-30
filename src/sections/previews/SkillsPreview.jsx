@@ -2,10 +2,10 @@ import { codingProfiles, skillGroups } from '../../constants/index.js';
 import { IconExternal } from '../../components/ide/icons.jsx';
 
 const SkillsPreview = () => (
-    <div className="pv pv-skills">
+    <div className="pv pv-skills" data-stagger>
         <p className="pv_run">$ cat skills.json | render</p>
 
-        <div className="skill_groups">
+        <div className="skill_groups" data-stagger>
             {skillGroups.map((g) => (
                 <div className="skill_group" key={g.id}>
                     <p className="skill_groupHead">
@@ -24,7 +24,7 @@ const SkillsPreview = () => (
         </div>
 
         <p className="pv_label">proof of craft</p>
-        <div className="skill_profiles">
+        <div className="skill_profiles" data-stagger>
             {codingProfiles.map((p) => (
                 <a key={p.id} className="skill_profile" href={p.url} target="_blank" rel="noopener noreferrer">
                     <img src={p.icon} alt="" loading="lazy" />

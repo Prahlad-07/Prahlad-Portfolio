@@ -10,22 +10,27 @@ import { IconChevron, IconTerminal } from './icons.jsx';
 const FILE_NAMES = FILES.map((f) => f.name).concat(FILES.map((f) => f.id));
 const FILE_CMDS = new Set(['open', 'o', 'cd', 'cat', 'less', 'bat']);
 
-const Line = ({ entry }) => {
+const Line = ({ entry, delay }) => {
+    const style = delay ? { animationDelay: `${delay}ms` } : undefined;
     if (entry.kind === 'code') {
         return (
-            <div className="term_code">
+            <div className="term_code" style={style}>
                 <CodeBlock lines={highlight(entry.source, entry.lang)} gutter={false} />
             </div>
         );
     }
     if (entry.kind === 'cmd') {
         return (
-            <p className="term_line term_line--cmd">
+            <p className="term_line term_line--cmd" style={style}>
                 <span className="term_prompt">❯</span> {entry.text}
             </p>
         );
     }
-    return <p className={`term_line term_line--${entry.kind}`}>{entry.text}</p>;
+    return (
+        <p className={`term_line term_line--${entry.kind}`} style={style}>
+            {entry.text}
+        </p>
+    );
 };
 
 const Terminal = ({ variant = 'docked' }) => {
@@ -35,11 +40,13 @@ const Terminal = ({ variant = 'docked' }) => {
     const [hIdx, setHIdx] = useState(-1);
     const bodyRef = useRef(null);
     const inputRef = useRef(null);
+    const seenCount = useRef(terminalLines.length);
 
     const collapsed = variant === 'docked' && !terminalOpen;
 
     useEffect(() => {
         if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+        seenCount.current = terminalLines.length;
     }, [terminalLines, terminalOpen]);
 
     const submit = (e) => {
@@ -112,8 +119,12 @@ const Terminal = ({ variant = 'docked' }) => {
             {!collapsed && (
                 <>
                     <div className="term_body" ref={bodyRef} onClick={promptFocus} role="presentation">
-                        {terminalLines.map((entry) => (
-                            <Line key={entry.id ?? entry.text} entry={entry} />
+                        {terminalLines.map((entry, i) => (
+                            <Line
+                                key={entry.id ?? entry.text}
+                                entry={entry}
+                                delay={i >= seenCount.current ? (i - seenCount.current) * 45 : 0}
+                            />
                         ))}
                         {idle && (
                             <p className="term_line term_line--muted">

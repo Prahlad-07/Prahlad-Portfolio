@@ -1,10 +1,10 @@
 import { clientReviews } from '../../constants/index.js';
 
 const RecommendationsPreview = () => (
-    <div className="pv pv-recs">
+    <div className="pv pv-recs" data-stagger>
         <p className="pv_run">$ cat recommendations.md</p>
 
-        <div className="rec_grid">
+        <div className="rec_grid" data-stagger>
             {clientReviews.map((r) => (
                 <figure className="rec" key={r.id}>
                     <blockquote className="rec_quote">{r.review}</blockquote>

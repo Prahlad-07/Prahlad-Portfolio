@@ -6,10 +6,10 @@ const ExperiencePreview = () => {
     const [open, setOpen] = useState(workExperiences[0]?.id ?? null);
 
     return (
-        <div className="pv pv-xp">
+        <div className="pv pv-xp" data-stagger>
             <p className="pv_run">$ ts-node experience.ts</p>
 
-            <ol className="xp_list">
+            <ol className="xp_list" data-stagger>
                 {workExperiences.map((w) => {
                     const isOpen = open === w.id;
                     return (

@@ -55,7 +55,7 @@ const ContactPreview = () => {
     };
 
     return (
-        <div className="pv pv-contact">
+        <div className="pv pv-contact" data-stagger>
             <p className="pv_run">$ node contact.ts</p>
 
             <div className="contact_grid">

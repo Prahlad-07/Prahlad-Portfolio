@@ -1,7 +1,7 @@
 import { aboutHighlights, achievements, personalInfo } from '../../constants/index.js';
 
 const AboutPreview = () => (
-    <div className="pv pv-about">
+    <div className="pv pv-about" data-stagger>
         <p className="pv_run">$ ts-node about.ts</p>
 
         <p className="about_lead">
@@ -10,7 +10,7 @@ const AboutPreview = () => (
             I bring that rigor to everything.
         </p>
 
-        <div className="about_cols">
+        <div className="about_cols" data-stagger>
             <div>
                 <p className="pv_label">how I work</p>
                 <ul className="pv_list pv_list--arrow">
