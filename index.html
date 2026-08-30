@@ -2,54 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-<!--    <link rel="icon" type="image/svg+xml" href="/vite.svg" />-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#fcfbf9" />
+    <meta name="theme-color" content="#1e1e1e" />
+    <meta
+      name="description"
+      content="Prahlad Yadav — Full-Stack Engineer. Backend-first. Portfolio built as a code editor."
+    />
     <script>
       (() => {
         try {
           const storageKey = 'portfolio-theme';
-          const storedTheme = window.localStorage.getItem(storageKey);
-
-          // Dev-only: when running on localhost, clear an existing 'dark' preference
-          // so the app boots in light mode for development/testing.
-          if (
-            storedTheme === 'dark' &&
-            (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-          ) {
-            window.localStorage.removeItem(storageKey);
-          }
-
-          const storedAfterRemoval = window.localStorage.getItem(storageKey);
-          const resolvedTheme =
-            storedAfterRemoval === 'light' || storedAfterRemoval === 'dark'
-              ? storedAfterRemoval
-              : 'light';
+          const stored = window.localStorage.getItem(storageKey);
+          const resolved = stored === 'light' || stored === 'dark' ? stored : 'dark';
 
           const root = document.documentElement;
-          root.dataset.theme = resolvedTheme;
-          root.style.colorScheme = resolvedTheme;
+          root.dataset.theme = resolved;
+          root.style.colorScheme = resolved;
 
-          const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-          if (themeColorMeta) {
-            themeColorMeta.setAttribute(
-              'content',
-              resolvedTheme === 'dark' ? '#0a0a0c' : '#fcfbf9',
-            );
-          }
-
-          // Helpful debug log during development
-          if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-            // eslint-disable-next-line no-console
-            console.log('Theme bootstrap resolved:', resolvedTheme, 'stored:', storedAfterRemoval);
-          }
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', resolved === 'dark' ? '#1e1e1e' : '#ffffff');
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Theme bootstrap failed:', error);
+          document.documentElement.dataset.theme = 'dark';
         }
       })();
     </script>
-    <title>Prahlad Portfolio</title>
+    <title>Prahlad Yadav — ~/portfolio</title>
   </head>
   <body>
     <div id="root"></div>
